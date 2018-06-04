@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Welcome</title>
+
+    </head>
+    <body>
+
+        <div class="event">
+
+            <div>
+                <p>Event starts at <span th:text="${event.startDate}"></span></p>
+            </div>
+
+                <table style="text-align: center; padding: 10px; margin: 5px;">
+                        <tr>
+                           <th>No.</th>
+                           <th>Horse</th>
+                           <th>Age</th>
+                           <th>Jockey</th>
+                           <th>Weight</th>
+                           <th>Win</th>
+                           <th>Place</th>
+                           <th>Show</th>
+                       </tr>
+
+                       <tr th:each="horse, iterStat : ${event.horses}" th:object="${horse}">
+                            <td th:text="${iterStat.count}"></td>
+                            <td th:text="*{name}"></td>
+                            <td th:text="*{age}"></td>
+                            <td> <span th:text="*{#strings.substring(jockey.firstName, 0,1)}"/>. <span th:text="*{jockey.lastName}"/></td>
+                            <td th:text="*{jockey.weight}"></td>
+                            <td>
+                                <form th:action="@{/bet/basket/add}" method="post">
+                                    <input type="hidden" name="horse" th:value="${horse}">
+                                    <input type="hidden" name="betType" value="Win">
+                                    <input type="hidden" name="event" th:value="${event}">
+                                    <input type="submit" name="oddValue" th:value="*{odds.winValue}"/>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{/bet/basket/add}" method="post">
+                                      <input type="hidden" name="horse" th:value="${horse}">
+                                      <input type="hidden" name="betType" value="Place">
+                                      <input type="hidden" name="event" th:value="${event}">
+                                      <input type="submit" name="oddValue" th:value="*{odds.placeValue}"/>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{/bet/basket/add}" method="post">
+                                     <input type="hidden" name="horse" th:value="${horse}">
+                                     <input type="hidden" name="betType" value="Show">
+                                     <input type="hidden" name="event" th:value="${event}">
+                                     <input type="submit" name="oddValue" th:value="*{odds.showValue}"/>
+                                </form>
+                            </td>
+                       </tr>
+                </table>
+        </div>
+
+    </body>
+</html>

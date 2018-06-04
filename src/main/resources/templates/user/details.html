@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+      <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Edit Account</title>
+
+      </head>
+
+    <body>
+        <h1>Edit Personal Details</h1>
+        <form th:action="@{/user/details}" th:object="${user}" method="post">
+
+            <div><label> First Name : <input type="text" name="firstName" th:value="*{firstName}"/> </label></div>
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName Error</p>
+
+            <div><label> Last Name : <input type="text" name="lastName" th:value="*{lastName}"/> </label></div>
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</p>
+
+            <!--<div><label> Birth Date : <input type="date" name="birthdate"/> </label></div>-->
+            <!--<p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">BirthDate Error</p>-->
+
+            <div><label> Password: <input type="password" name="password" th:value="*{password}"/> </label></div>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+
+            <input type="hidden" name="username" th:value="*{username}">
+            <input type="hidden" name="birthDate" th:value="*{birthDate}">
+            <div><input type="submit" value="Update"/></div>
+        </form>
+
+        <div class="deleteAccount">
+            <p>Delete Account:</p></br>
+            <form th:action="@{/user/delete}" method="post">
+                 <input type="hidden" name="username" th:value="${user.username}">
+                 <input type="submit" value="Delete"/>
+            </form>
+        </div>
+
+    </body>
+</html>

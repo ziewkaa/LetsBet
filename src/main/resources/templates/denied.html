@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Error/title</title>
+</head>
+    <body>
+        <h3>Sorry, you cannot enter without signing in</h3>
+        <a style="color: blue" th:href="@{/}">Home</a>
+        <a style="color: blue" th:href="@{/login}">Sign In</a>
+        <a style="color: blue" th:href="@{/register}">Sign Up</a>
+    </body>
+</html>

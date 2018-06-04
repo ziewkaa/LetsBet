@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title>Horse Details</title>
+</head>
+
+    <body>
+        <div class="details" th:object="${horse}">
+
+           <table>
+                <tr>
+                    <th>Name</th><th>Age</th><th>Trainer</th><th>Wins</th><th>Places</th><th>Shows</th><th></th>
+                </tr>
+                <tr>
+                    <th th:text="*{name}"></th><th th:text="*{age}"></th><th th:text="*{trainer.firstName} *{trainer.lastName} "></th><th th:text="*{history.wins}"></th><th th:text="*{history.places}"></th><th th:text="*{history.shows}"></th>
+                </tr>
+            </table>
+
+        </div>
+
+    </body>
+
+</html>

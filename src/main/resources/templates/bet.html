@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Welcome</title>
+
+    </head>
+<body>
+    <form th:action="@{/bet/add}" method="post">
+        <div>
+            <h3>Add bet to basket:</h3>
+            <p> Event: <span th:text="${bet.event.id}"/></p>
+            <p> Horse: <span th:text="${bet.horse.name}"/></p>
+            <p> Type: <span th:text="${bet.betType}"/></p>
+            <p> Odd Value: <span th:text="${bet.oddValue}"/></p>
+        </div>
+
+           <div><label> Amount : <input type="number" name="betValue" step="10" /></label></div>
+           <div><input type="submit" value="Place Bet"/></div>
+
+    </form>
+
+</body>
+</html>
