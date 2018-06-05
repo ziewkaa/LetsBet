@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.letsbetnow.model.Bet;
 import pl.coderslab.letsbetnow.model.Operation;
 import pl.coderslab.letsbetnow.model.User;
+import pl.coderslab.letsbetnow.service.BetService;
 import pl.coderslab.letsbetnow.service.OperationService;
 import pl.coderslab.letsbetnow.service.UserService;
-import pl.coderslab.letsbetnow.serviceimpl.CurrentUser;
+import pl.coderslab.letsbetnow.implementation.config.CurrentUser;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -32,9 +34,12 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private BetService betService;
+
+    @Autowired
     private OperationService operationService;
 
-    @GetMapping("/details")
+    @GetMapping("/edit")
     public String userDetails(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
         User user = userService.findUserByUsername(currentUser.getUsername());
@@ -44,7 +49,7 @@ public class UserController {
         return "user/details";
     }
 
-    @PostMapping("/details")
+    @PostMapping("/edit")
     public String userDetails(@AuthenticationPrincipal UserDetails userDetails, @Valid User user, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
@@ -71,83 +76,6 @@ public class UserController {
         return "redirect:/logout";
     }
 
-
-    @GetMapping("/wallet")
-    public String userHome(@AuthenticationPrincipal CurrentUser currentUser, Model model){
-
-        User user = userService.findUserByUsername(currentUser.getUsername());
-
-        model.addAttribute("user",user);
-
-        return "user/wallet";
-    }
-
-    @GetMapping("/wallet/recharge")
-    public String walletRecharge(@AuthenticationPrincipal CurrentUser currentUser, Model model){
-
-        User user = userService.findUserByUsername(currentUser.getUsername());
-        model.addAttribute("user",user);
-
-        return "user/recharge";
-    }
-
-    @PostMapping("/wallet/recharge")
-    public String walletRecharge(@RequestParam BigDecimal amount, @RequestParam Long id){
-
-        User user = userService.getUserById(id);
-        List<Operation> operations = user.getOperations();
-
-        BigDecimal currentFunds = user.getFunds();
-        currentFunds = currentFunds.add(amount);
-
-        Operation operation = new Operation();
-        operation.setRegisteredDate(LocalDate.now());
-        operation.setRegisteredTime(LocalTime.now());
-        operation.setValue(amount);
-        operation.setType("Recharge");
-        operation.setUser(user);
-        operationService.saveOperation(operation);
-
-        operations.add(operation);
-        user.setFunds(currentFunds);
-        userService.saveUser(user);
-
-        return "redirect:/user/wallet";
-    }
-
-    @GetMapping("/wallet/withdraw")
-    public String walletWithdraw(@AuthenticationPrincipal CurrentUser currentUser, Model model){
-
-        User user = userService.findUserByUsername(currentUser.getUsername());
-        model.addAttribute("user",user);
-
-        return "user/withdraw";
-    }
-
-    @PostMapping("/wallet/withdraw")
-    public String walletWithdraw(@RequestParam BigDecimal amount, @RequestParam Long id){
-
-        User user = userService.getUserById(id);
-        List<Operation> operations = user.getOperations();
-
-        BigDecimal currentFunds = user.getFunds();
-        currentFunds = currentFunds.subtract(amount);
-
-        Operation operation = new Operation();
-        operation.setRegisteredDate(LocalDate.now());
-        operation.setRegisteredTime(LocalTime.now());
-        operation.setValue(amount);
-        operation.setType("Withdrawal");
-        operation.setUser(user);
-        operationService.saveOperation(operation);
-
-        operations.add(operation);
-        user.setFunds(currentFunds);
-        userService.saveUser(user);
-
-        return "redirect:/user/wallet";
-    }
-
     @GetMapping("/card/add")
     public String addCard(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
@@ -156,6 +84,16 @@ public class UserController {
         model.addAttribute("user",user);
 
         return "user/wallet";
+    }
+
+    @GetMapping("/bets")
+    public String userBets(@AuthenticationPrincipal CurrentUser currentUser, Model model){
+
+        User user = userService.findUserByUsername(currentUser.getUsername());
+        List<Bet> bets = betService.findAllByUser(user);
+        model.addAttribute("bets",bets);
+
+        return "user/bets";
     }
 
 }

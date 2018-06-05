@@ -1,14 +1,9 @@
 package pl.coderslab.letsbetnow.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +12,8 @@ import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.service.EventService;
 import pl.coderslab.letsbetnow.service.UserService;
-import pl.coderslab.letsbetnow.serviceimpl.CurrentUser;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
