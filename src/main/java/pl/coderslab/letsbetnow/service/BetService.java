@@ -10,4 +10,10 @@ public interface BetService {
     void saveBet(Bet bet);
 
     List<Bet> findAllByUser(User user);
+
+    List<Bet> findAllBets();
+
+    List<Bet> findAllBetsByEventId(Long id);
+
+//    List<Bet> findAllBetsByHorseId(Long id);
 }
