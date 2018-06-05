@@ -1,6 +1,8 @@
 package pl.coderslab.letsbetnow.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.model.Trainer;
 
@@ -13,4 +15,8 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
     Horse findByName(String name);
 
     Horse findOneById(Long id);
+
+//    List<Horse> findAllByEvents(Event event);
+
+//    List<Horse> findAllByEventsId(Long id);
 }

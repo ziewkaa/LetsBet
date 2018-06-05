@@ -9,4 +9,9 @@ import java.util.List;
 public interface BetRepository extends JpaRepository<Bet, Long> {
 
     List<Bet> findAllByUser(User user);
+
+    List<Bet> findAllByEventId(Long id);
+
+    List<Bet> findAllByHorseId(Long id);
+
 }
