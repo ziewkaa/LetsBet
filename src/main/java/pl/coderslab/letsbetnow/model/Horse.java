@@ -21,8 +21,8 @@ public class Horse {
     @OneToMany(mappedBy = "horse")
     private List<Bet> bets;
 
-    @ManyToOne
-    private Event event;
+    @ManyToMany(mappedBy = "horse")
+    private List<EventsHorses> eventsHorses;
 
     @ManyToOne
     private Jockey jockey;
@@ -60,6 +60,22 @@ public class Horse {
         this.age = age;
     }
 
+    public Odds getOdds() {
+        return odds;
+    }
+
+    public void setOdds(Odds odds) {
+        this.odds = odds;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
     public Jockey getJockey() {
         return jockey;
     }
@@ -76,14 +92,6 @@ public class Horse {
         this.trainer = trainer;
     }
 
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
     public History getHistory() {
         return history;
     }
@@ -92,11 +100,12 @@ public class Horse {
         this.history = history;
     }
 
-    public Odds getOdds() {
-        return odds;
+    public List<EventsHorses> getEventsHorses() {
+        return eventsHorses;
     }
 
-    public void setOdds(Odds odds) {
-        this.odds = odds;
+    public void setEventsHorses(List<EventsHorses> eventsHorses) {
+        this.eventsHorses = eventsHorses;
     }
 }
+

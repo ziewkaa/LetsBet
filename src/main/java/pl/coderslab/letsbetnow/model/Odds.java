@@ -11,10 +11,7 @@ public class Odds {
     private Long id;
 
     @OneToOne
-    private Horse horse;
-
-    @OneToMany
-    private List<Bet> bets;
+    private EventsHorses eventsHorses;
 
     private double winValue;
 
@@ -31,6 +28,14 @@ public class Odds {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EventsHorses getEventsHorses() {
+        return eventsHorses;
+    }
+
+    public void setEventsHorses(EventsHorses eventsHorses) {
+        this.eventsHorses = eventsHorses;
     }
 
     public double getWinValue() {
@@ -55,13 +60,5 @@ public class Odds {
 
     public void setShowValue(double showValue) {
         this.showValue = showValue;
-    }
-
-    public Horse getHorse() {
-        return horse;
-    }
-
-    public void setHorse(Horse horse) {
-        this.horse = horse;
     }
 }

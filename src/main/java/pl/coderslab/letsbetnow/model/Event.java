@@ -2,7 +2,6 @@ package pl.coderslab.letsbetnow.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class Event {
 
     private LocalTime endTime;
 
-    private boolean isScheduled = true;
+    private String status;
 
     private String racecourse;
 
@@ -30,10 +29,7 @@ public class Event {
     private List<Bet> bets;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
-    private List<Horse> horses;
-
-//    @OneToMany(mappedBy = "event")
-//    private List<Odds> winOdds;
+    private List<EventsHorses> eventHorses;
 
     public Event() {
     }
@@ -70,12 +66,12 @@ public class Event {
         this.endTime = endTime;
     }
 
-    public boolean isScheduled() {
-        return isScheduled;
+    public String getStatus() {
+        return status;
     }
 
-    public void setScheduled(boolean schedules) {
-        isScheduled = schedules;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getRacecourse() {
@@ -86,22 +82,6 @@ public class Event {
         this.racecourse = racecourse;
     }
 
-    public List<Bet> getBets() {
-        return bets;
-    }
-
-    public void setBets(List<Bet> bets) {
-        this.bets = bets;
-    }
-
-    public List<Horse> getHorses() {
-        return horses;
-    }
-
-    public void setHorses(List<Horse> horses) {
-        this.horses = horses;
-    }
-
     public int getDistance() {
         return distance;
     }
@@ -110,5 +90,19 @@ public class Event {
         this.distance = distance;
     }
 
+    public List<Bet> getBets() {
+        return bets;
+    }
 
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public List<EventsHorses> getEventHorses() {
+        return eventHorses;
+    }
+
+    public void setEventHorses(List<EventsHorses> eventHorses) {
+        this.eventHorses = eventHorses;
+    }
 }
