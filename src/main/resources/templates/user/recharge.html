@@ -15,7 +15,7 @@
             <p th:text="${user.funds}"></p>
         </div>
 
-        <form th:action="@{/user/wallet/recharge}" method="post">
+        <form th:action="@{/wallet/recharge}" method="post">
 
            <div><label> Amount : <input type="number" name="amount" placeholder="10" step="10" min="10" max="1000" /></label></div>
            <div><label><input type="hidden" name="id" th:value="${user.id}"></label></div>

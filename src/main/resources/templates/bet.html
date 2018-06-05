@@ -7,21 +7,27 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Welcome</title>
-
     </head>
 <body>
     <form th:action="@{/bet/add}" method="post">
-        <div>
-            <h3>Add bet to basket:</h3>
-            <p> Event: <span th:text="${bet.event.id}"/></p>
-            <p> Horse: <span th:text="${bet.horse.name}"/></p>
+        <div th:object="${bet}">
+
+            <h3>Confirm Bet:</h3>
+
+            <p> Event: <span th:object="${event}" th:text="*{racecourse}"/></p>
+                <input type="hidden" name="event" th:value="${event.id}"/>
+            <p> Horse: <span th:object="${horse}" th:text="*{name}"/></p>
+                <input type="hidden" name="horse" th:value="${horse.id}"/>
+
             <p> Type: <span th:text="${bet.betType}"/></p>
+                <input type="hidden" name="betType" th:value="${bet.betType}"/>
+
             <p> Odd Value: <span th:text="${bet.oddValue}"/></p>
+                <input type="hidden" name="oddValue" th:value="${bet.oddValue}"/>
+
         </div>
-
-           <div><label> Amount : <input type="number" name="betValue" step="10" /></label></div>
+           <div><label> Amount : <input type="number" name="betValue" th:value="${bet.betValue}" step="5" min="5" /></label></div>
            <div><input type="submit" value="Place Bet"/></div>
-
     </form>
 
 </body>

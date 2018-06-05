@@ -17,8 +17,8 @@
 
 
         <div>
-            <p><a th:href="@{/user/wallet/recharge}"><button>Recharge</button></a></p>
-            <p><a th:href="@{/user/wallet/withdraw}"><button>Withdraw</button></a></p>
+            <p><a th:href="@{/wallet/recharge}"><button>Recharge</button></a></p>
+            <p><a th:href="@{/wallet/withdraw}"><button>Withdraw</button></a></p>
         </div>
 
         <div class="fundsOperations" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
@@ -40,27 +40,6 @@
                 </tr>
             </table>
             </div>
-        </div>
-
-        <div class="betsOperations" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
-        <h2>Bets:</h2>
-            <table>
-                <tr>
-                    <th>No.</th>
-                    <th>Horse</th>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Prize</th>
-                </tr>
-                <tr th:each="bet , iterStat : ${user.bets}" th:object="${bet}">
-                <td th:text="${iterStat.count}"></td>
-                <td th:text="${bet.horse}"></td>
-                <td th:text="${bet.betType}"></td>
-                <td th:text="${bet.registered}"></td>
-                <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
-                <td>Prize</td>
-                </tr>
-            </table>
         </div>
 
         </div>

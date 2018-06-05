@@ -10,18 +10,19 @@
 
     <body>
 
-            <div>
-                <p>Current funds: </p></br>
-                <p th:text="${user.funds}"></p>
-            </div>
+        <div>
+            <p>Current funds: </p></br>
+            <p th:text="${user.funds}"></p>
+        </div>
 
-        <form th:action="@{/user/wallet/withdraw}" method="post">
+        <form th:action="@{/wallet/withdraw}" method="post">
 
            <div><label> Amount : <input type="number" name="amount" step="0.1" min="0" th:max="${user.funds}"/> </label></div>
            <div><label><input type="hidden" name="id" th:value="${user.id}"></label></div>
            <div><input type="submit" value="Withdraw"/></div>
 
         </form>
+
     </body>
 
 </html>

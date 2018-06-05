@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Welcome</title>
+
+    </head>
+    <body>
+            <div class="bets" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
+                    <h2>Bets:</h2>
+                        <table>
+                            <tr>
+                                <th>No.</th>
+                                <th>Event</th>
+                                <th>Horse</th>
+                                <th>Registered</th>
+                                <th>Type</th>
+                                <th>Odd Vale</th>
+                                <th>Bet Vale</th>
+                                <th>Prize</th>
+                            </tr>
+                            <tr th:each="bet , iterStat : ${bets}" th:object="${bet}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="*{event}"></td>
+                                <td th:text="*{horse}"></td>
+                                <td th:text="*{registered}"></td>
+                                <td th:text="*{betType}"></td>
+                                <td th:text="*{oddValue}"></td>
+                                <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
+                                <td>Prize</td>
+                                <td> </td>
+                            </tr>
+                        </table>
+                    </div>
+
+    </body>
+</html>
