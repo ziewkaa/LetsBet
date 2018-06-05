@@ -52,16 +52,18 @@ public class BetController {
     }
 
     @PostMapping("/basket/add")
-    public String addToBasket(@RequestParam int event, @RequestParam Double oddValue, @RequestParam int horse, @RequestParam String betType,  Model model) {
+    public String addToBasket(@RequestParam Long event, @RequestParam Double oddValue, @RequestParam Long horse, @RequestParam String betType, @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
+        Event eventToBet = eventService.findEventById(event);
+        Horse horseToBet = horseService.findHorseById(horse);
         Bet bet = new Bet();
-        bet.setHorse(horse);
-        bet.setEvent(event);
+        bet.setHorse(horseToBet);
+        bet.setEvent(eventToBet);
         bet.setBetType(betType);
         bet.setOddValue(oddValue);
-        Event eventToBet = eventService.findEventById((long) event);
-        Horse horseToBet = horseService.findHorseById((long) horse);
+        User user = userService.findUserByUsername(userDetails.getUsername());
 
+        model.addAttribute("user", user);
         model.addAttribute("bet", bet);
         model.addAttribute("event", eventToBet);
         model.addAttribute("horse", horseToBet);

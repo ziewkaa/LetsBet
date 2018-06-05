@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.letsbetnow.implementation.config.CurrentUser;
+import pl.coderslab.letsbetnow.service.implementation.config.CurrentUser;
 import pl.coderslab.letsbetnow.model.Operation;
 import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.service.OperationService;
