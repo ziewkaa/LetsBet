@@ -1,6 +1,7 @@
 package pl.coderslab.letsbetnow.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,11 +14,9 @@ public class Bet {
 
     private LocalDateTime registered;
 
-    @ManyToOne
-    private Horse horse;
+    private int horse;
 
-    @ManyToOne
-    private Event event;
+    private int event;
 
     @ManyToOne
     private User user;
@@ -47,12 +46,20 @@ public class Bet {
         this.registered = registered;
     }
 
-    public Horse getHorse() {
+    public int getHorse() {
         return horse;
     }
 
-    public void setHorse(Horse horse) {
+    public void setHorse(int horse) {
         this.horse = horse;
+    }
+
+    public int getEvent() {
+        return event;
+    }
+
+    public void setEvent(int event) {
+        this.event = event;
     }
 
     public User getUser() {
@@ -85,13 +92,5 @@ public class Bet {
 
     public void setBetType(String betType) {
         this.betType = betType;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 }

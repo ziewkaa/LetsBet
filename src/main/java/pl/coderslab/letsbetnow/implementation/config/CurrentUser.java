@@ -1,4 +1,4 @@
-package pl.coderslab.letsbetnow.serviceimpl;
+package pl.coderslab.letsbetnow.implementation.config;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

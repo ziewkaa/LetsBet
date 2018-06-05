@@ -1,4 +1,4 @@
-package pl.coderslab.letsbetnow.serviceimpl;
+package pl.coderslab.letsbetnow.implementation;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
