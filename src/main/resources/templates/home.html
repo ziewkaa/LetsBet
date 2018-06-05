@@ -25,12 +25,12 @@
           <div>
             <p><a th:href="@{/wallet/home}">Wallet</a></p>
             <p><a th:href="@{/user/bets}">My Bets</a></p>
-            <p><a th:href="@{/user/details}">Account Details</a></p>
+            <p><a th:href="@{/user/edit}">Account Details</a></p>
           </div>
 
         <h2>Upcoming Events:</h2>
 
-         <div class="events" th:each="event : ${events}" th:object="${event}">
+         <div class="events" th:each="event : ${upcomingEvents}" th:object="${event}">
             <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
                <table style="text-align: center; padding: 10px; margin: 5px;">
                     <tr>
@@ -52,5 +52,30 @@
 
             </div>
          </div>
+
+         <h2>Live Events:</h2>
+
+                  <div class="events" th:each="event : ${liveEvents}" th:object="${event}">
+                     <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
+                        <table style="text-align: center; padding: 10px; margin: 5px;">
+                             <tr>
+                                 <td >Date</td>
+                                 <td >Time</td>
+                                 <td >Racecourse</td>
+                                 <td >Distance</td>
+                                 <td >Results</td>
+                            </tr>
+                            <tr>
+                                 <td th:text="*{startDate}"></td>
+                                 <td th:text="*{startTime}"></td>
+                                 <td th:text="*{racecourse}"></td>
+                                 <td th:text="*{distance}"></td>
+                                 <td><a th:href="@{/event/{id}(id=${event.id})}"> View </a></td>
+                            </tr>
+
+                        </table>
+
+                     </div>
+                  </div>
     </body>
 </html>

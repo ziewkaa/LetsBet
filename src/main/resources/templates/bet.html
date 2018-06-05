@@ -9,26 +9,38 @@
         <title>Welcome</title>
     </head>
 <body>
-    <form th:action="@{/bet/add}" method="post">
-        <div th:object="${bet}">
 
-            <h3>Confirm Bet:</h3>
+    <div class="content" >
 
-            <p> Event: <span th:object="${event}" th:text="*{racecourse}"/></p>
-                <input type="hidden" name="event" th:value="${event.id}"/>
-            <p> Horse: <span th:object="${horse}" th:text="*{name}"/></p>
-                <input type="hidden" name="horse" th:value="${horse.id}"/>
+            <div th:if="${bet.oddValue} > ${user.funds}">
+                <p>Please recharge your wallet <a th:href="@{/wallet/recharge}">here</a></p>
+            </div>
 
-            <p> Type: <span th:text="${bet.betType}"/></p>
-                <input type="hidden" name="betType" th:value="${bet.betType}"/>
+            <div th:if="${bet.oddValue} <= ${user.funds}">
+                <form th:action="@{/bet/add}" method="post">
 
-            <p> Odd Value: <span th:text="${bet.oddValue}"/></p>
-                <input type="hidden" name="oddValue" th:value="${bet.oddValue}"/>
+                <div th:object="${bet}">
 
+                    <h3>Confirm Bet:</h3>
+
+                    <p> Event: <span th:object="${event}" th:text="*{racecourse}"/></p>
+                        <input type="hidden" name="event" th:value="${event.id}"/>
+                    <p> Horse: <span th:object="${horse}" th:text="*{name}"/></p>
+                        <input type="hidden" name="horse" th:value="${horse.id}"/>
+
+                    <p> Type: <span th:text="${bet.betType}"/></p>
+                        <input type="hidden" name="betType" th:value="${bet.betType}"/>
+
+                    <p> Odd Value: <span th:text="${bet.oddValue}"/></p>
+                        <input type="hidden" name="oddValue" th:value="${bet.oddValue}"/>
+                </div >
+
+                   <div><label> Amount : <input type="number" name="betValue" th:value="${bet.betValue}" step="5" min="5" /></label></div>
+                   <div><input type="submit" value="Place Bet"/></div>
+
+                </form>
+            </div>
         </div>
-           <div><label> Amount : <input type="number" name="betValue" th:value="${bet.betValue}" step="5" min="5" /></label></div>
-           <div><input type="submit" value="Place Bet"/></div>
-    </form>
 
-</body>
+    </body>
 </html>

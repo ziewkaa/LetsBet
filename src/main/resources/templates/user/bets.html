@@ -25,8 +25,8 @@
                             </tr>
                             <tr th:each="bet , iterStat : ${bets}" th:object="${bet}">
                                 <td th:text="${iterStat.count}"></td>
-                                <td th:text="*{event}"></td>
-                                <td th:text="*{horse}"></td>
+                                <td th:text="*{event.id}"></td>
+                                <td th:text="*{horse.id}"></td>
                                 <td th:text="*{registered}"></td>
                                 <td th:text="*{betType}"></td>
                                 <td th:text="*{oddValue}"></td>
