@@ -1,13 +1,17 @@
 package pl.coderslab.letsbetnow.rest;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.coderslab.letsbetnow.model.Bet;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.Horse;
-import pl.coderslab.letsbetnow.service.HorseService;
+import pl.coderslab.letsbetnow.rest.Dto.HorseDto;
+import pl.coderslab.letsbetnow.rest.DtoService.BetDtoService;
+import pl.coderslab.letsbetnow.rest.DtoService.HorseDtoService;
 
 import java.util.List;
 
@@ -16,21 +20,24 @@ import java.util.List;
 public class HorseControllerRest {
 
     @Autowired
-    private HorseService horseService;
+    private HorseDtoService horseDtoService;
 
-    @GetMapping("/all")
-    public List<Horse> getAllHorses() {
-        return horseService.findAllHorses();
+    @Autowired
+    private BetDtoService betDtoService;
+
+    @GetMapping
+    public List<HorseDto> getAllHorses() {
+
+        return horseDtoService.getAllHorses();
+
     }
 
     @GetMapping("/{id}")
-    public Horse getHorse(@PathVariable Long id) {
-        return horseService.findHorseById(id);
+    public HorseDto getHorseById(@PathVariable Long id) {
+
+        return horseDtoService.getHorseById(id);
+
     }
 
-//    @GetMapping("/{id}/horses")
-//    public List<Horse> getHorsesByEventId(@PathVariable Long id) {
-//        return horseService.findAllHorsesByEventId(id);
-//    }
 
 }

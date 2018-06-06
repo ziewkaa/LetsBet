@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.letsbetnow.model.Bet;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.Horse;
+import pl.coderslab.letsbetnow.rest.Dto.BetDto;
+import pl.coderslab.letsbetnow.rest.Dto.EventDto;
+import pl.coderslab.letsbetnow.rest.DtoService.BetDtoService;
+import pl.coderslab.letsbetnow.rest.DtoService.EventDtoService;
 import pl.coderslab.letsbetnow.service.EventService;
 
 import java.util.List;
@@ -17,23 +21,16 @@ import java.util.List;
 public class EventControllerRest {
 
     @Autowired
-    private EventService eventService;
+    private EventDtoService eventDtoService;
 
-    @GetMapping("/all")
-    public List<Event> getAllEvents() {
-        return eventService.findAllEvents();
+    @GetMapping
+    public List<EventDto> getAllEvents() {
+        return eventDtoService.getAllEvents();
     }
 
-//    @GetMapping("/{id}")
-//    public Event getEvent(@PathVariable Long id) {
-//        return eventService.findEventById(id);
-//    }
-
-//    @GetMapping("/{id}/events")
-//    public List<Event> getEventsByHorseId(@PathVariable Long id) {
-//        return eventService.findAllEventsByHorseId(id);
-//    }
-
-
+    @GetMapping("/{id}")
+    public EventDto getEventById(@PathVariable Long id) {
+        return eventDtoService.getEventById(id);
+    }
 
 }

@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.letsbetnow.model.Bet;
+import pl.coderslab.letsbetnow.rest.Dto.BetDto;
+import pl.coderslab.letsbetnow.rest.DtoService.BetDtoService;
 import pl.coderslab.letsbetnow.service.BetService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,19 +20,28 @@ public class BetControllerRest {
     @Autowired
     private BetService betService;
 
-    @GetMapping("/all")
-    public List<Bet> getAllBets() {
-        return betService.findAllBets();
+    @Autowired
+    private BetDtoService betDtoService;
+
+    @GetMapping
+    public List<BetDto> getAllBets() {
+
+        List<BetDto> bets = new ArrayList<>();
+        for (Bet bet : betService.findAllBets()) {
+            bets.add(betDtoService.getBet(bet));
+        }
+        return bets;
     }
 
-//    @GetMapping("/event/{id}/bets")
-//    public List<Bet> getBetsByEventId(@PathVariable Long id) {
-//        return betService.findAllBetsByEventId(id);
-//    }
+    @GetMapping("/{id}")
+    public List<BetDto> getBetById(@PathVariable Long id) {
 
-//    @GetMapping("/horse/{id}/bets")
-//    public List<Bet> getBetsByHorseId(@PathVariable Long id) {
-//        return betService.findAllBetsByHorseId(id);
-//    }
+        List<BetDto> bets = new ArrayList<>();
+        for (Bet bet : betService.findAllBets()) {
+            bets.add(betDtoService.getBet(bet));
+        }
+        return bets;
+    }
+
 
 }
