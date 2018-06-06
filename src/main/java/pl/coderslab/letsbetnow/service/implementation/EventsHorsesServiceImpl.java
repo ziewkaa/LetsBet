@@ -28,23 +28,18 @@ public class EventsHorsesServiceImpl implements EventsHorsesService {
     }
 
     @Override
-    public List<EventsHorses> findAllHorsesByEvent(Event event) {
-        return eventsHorsesRepository.findAllByEvent(event);
-    }
-
-    @Override
-    public List<EventsHorses> findAllEventsByHorse(Horse horse) {
-        return eventsHorsesRepository.findAllByHorse(horse);
-    }
-
-    @Override
     public List<EventsHorses> findAllEventsAndHorses() {
         return eventsHorsesRepository.findAll();
     }
 
     @Override
-    public List<EventsHorses> findAllEventsByEventStatus(String status) {
+    public List<EventsHorses> findAllByEventStatus(String status) {
         return eventsHorsesRepository.findAllByEventStatus(status);
+    }
+
+    @Override
+    public List<EventsHorses> findAllByHorse(Horse horse) {
+        return eventsHorsesRepository.findAllByHorse(horse);
     }
 
 

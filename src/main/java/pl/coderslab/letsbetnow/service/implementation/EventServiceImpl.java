@@ -10,6 +10,7 @@ import pl.coderslab.letsbetnow.service.EventService;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -38,6 +39,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<Event> findAllEventsByStatusAndEndTime(String status, LocalDate endTime) {
+        return eventRepository.findAllByStatusAndEndTime(status,endTime);
+    }
+
+    @Override
     public List<Event> findAllEventsByEndTimeBefore(LocalTime end) {
         return eventRepository.findAllByEndTimeBefore(end);
     }
@@ -57,10 +63,24 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAllByStatus(status);
     }
 
-//    @Override
-//    public List<Event> findAllEventsByHorseId(Long id) {
-//        return eventRepository.findAllByHorseId(id);
-//    }
+    @Override
+    public Event findEventByIdAndStartDate(Long id, LocalDate startDate) {
+        return eventRepository.findByIdAndStartDate(id, startDate);
+    }
+
+    public void setRandomEventLive(){
+
+        Random randomEvent = new Random();
+
+        Event event = eventRepository.findByIdAndStartDate((long)randomEvent.nextInt(40), LocalDate.now());
+        while (event == null) {
+            event = eventRepository.findByIdAndStartDate((long)randomEvent.nextInt(40), LocalDate.now());
+        }
+        event.setStartTime(LocalTime.now());
+        event.setStatus("Live");
+        eventRepository.save(event);
+
+    }
 
 
 }

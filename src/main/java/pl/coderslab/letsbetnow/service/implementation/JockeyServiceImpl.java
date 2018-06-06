@@ -2,6 +2,7 @@ package pl.coderslab.letsbetnow.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.model.Jockey;
 import pl.coderslab.letsbetnow.repository.JockeyRepository;
 import pl.coderslab.letsbetnow.service.JockeyService;
@@ -27,5 +28,10 @@ public class JockeyServiceImpl implements JockeyService {
     @Override
     public Jockey findJockeyById(Long id) {
         return jockeyRepository.findOneById(id);
+    }
+
+    @Override
+    public Jockey findJockeyByHorses(Horse horse) {
+        return jockeyRepository.findOneByHorses(horse);
     }
 }

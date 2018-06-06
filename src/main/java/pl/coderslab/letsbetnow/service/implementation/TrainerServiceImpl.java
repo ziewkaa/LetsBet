@@ -2,6 +2,7 @@ package pl.coderslab.letsbetnow.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.model.Trainer;
 import pl.coderslab.letsbetnow.repository.TrainerRepository;
 import pl.coderslab.letsbetnow.service.TrainerService;
@@ -28,4 +29,11 @@ public class TrainerServiceImpl  implements TrainerService {
     public Trainer findTrainerById(Long id) {
         return trainerRepository.findOneById(id);
     }
+
+    @Override
+    public Trainer findOneByHorses(Horse horse) {
+        return trainerRepository.findOneByHorses(horse);
+    }
+
+
 }

@@ -12,12 +12,9 @@ public interface EventsHorsesService {
 
     List<EventsHorses> findAllByEvent(Event event);
 
-    List<EventsHorses> findAllHorsesByEvent(Event event);
-
-    List<EventsHorses> findAllEventsByHorse(Horse horse);
-
     List<EventsHorses> findAllEventsAndHorses();
 
-    List<EventsHorses> findAllEventsByEventStatus(String status);
+    List<EventsHorses> findAllByEventStatus(String status);
 
+    List<EventsHorses> findAllByHorse(Horse horse);
 }

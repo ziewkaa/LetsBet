@@ -109,8 +109,8 @@ public class FakerService {
             List<String> racecourses = new ArrayList<>(Arrays.asList("Ascot", "Hamilton Park", "Hexham", "Kempton Park", "Leicester", "Newbury", "Newcastle", "Perth", "Warwick", "Windsor"));
             List<Integer> distances = new ArrayList<>(Arrays.asList(1400, 1600, 1800, 2000, 2200, 2500));
             List<Integer> minutes = new ArrayList<>(Arrays.asList(2,5, 10, 15, 20, 25, 30, 35, 40, 45));
-//            LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(10)));
-            LocalTime currentTime = LocalTime.now().plusMinutes(2);
+            LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(10)));
+//            LocalTime currentTime = LocalTime.now().plusMinutes(2);
             event.setStartTime(currentTime);
             event.setStatus("Planned");
             event.setStartDate(LocalDate.now().plusDays(random.nextInt(5)));
@@ -152,9 +152,9 @@ public class FakerService {
     public void getOdds() {
 
         List<EventsHorses> horses = eventHorsesService.findAllEventsAndHorses();
-        double baseWin = 3;
+        double baseWin = 1;
         double basePlace = 2;
-        double baseShow = 1;
+        double baseShow = 3;
 
         for (EventsHorses eventsHorses : horses) {
 
@@ -170,7 +170,7 @@ public class FakerService {
         }
     }
 
-    private double generateOdds(double base, Random randomWin) {
+    public double generateOdds(double base, Random randomWin) {
         double start = base + randomWin.nextInt(10);
         double end = (double) randomWin.nextInt(100) / 100;
         double result = start + end;

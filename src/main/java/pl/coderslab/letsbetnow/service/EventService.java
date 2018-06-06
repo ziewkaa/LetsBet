@@ -21,9 +21,14 @@ public interface EventService {
 
     List<Event> findAllEventsByStatusAndStartDate(String status, LocalDate startDate);
 
+    List<Event> findAllEventsByStatusAndEndTime(String status, LocalDate startDate);
+
     void saveEvent(Event event);
 
     List<Event> findAllEventsByStatus(String status);
 
-//    List<Event> findAllEventsByHorseId(Long id);
+    Event findEventByIdAndStartDate(Long id, LocalDate startDate);
+
+    public void setRandomEventLive();
+
 }

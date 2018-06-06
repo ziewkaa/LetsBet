@@ -1,6 +1,7 @@
 package pl.coderslab.letsbetnow.service;
 
 import pl.coderslab.letsbetnow.model.Bet;
+import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.model.User;
 
 import java.util.List;
@@ -14,6 +15,10 @@ public interface BetService {
     List<Bet> findAllBets();
 
     List<Bet> findAllBetsByEventId(Long id);
+
+    List<Bet> findAllBetsByHorse(Horse horse);
+
+    List<Bet> findAllBetsByHorseId(Long id);
 
 //    List<Bet> findAllBetsByHorseId(Long id);
 }
