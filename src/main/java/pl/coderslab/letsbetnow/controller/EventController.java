@@ -40,7 +40,10 @@ public class EventController {
             return "plannedevent";
         }
 
-        return "liveevent";
+        if (event.getStatus().equals("Live")) {
+            return "liveevent";
+        }
+        return "home";
     }
 
 }

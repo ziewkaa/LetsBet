@@ -7,9 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.thymeleaf.util.ArrayUtils;
-import org.thymeleaf.util.ListUtils;
-import pl.coderslab.letsbetnow.faker.FakerService;
+import pl.coderslab.letsbetnow.resourses.FakerService;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.service.EventService;
@@ -17,8 +15,6 @@ import pl.coderslab.letsbetnow.service.UserService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
