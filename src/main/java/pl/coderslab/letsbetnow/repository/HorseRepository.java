@@ -16,7 +16,5 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
 
     Horse findOneById(Long id);
 
-//    List<Horse> findAllByEvents(Event event);
 
-//    List<Horse> findAllByEventsId(Long id);
 }

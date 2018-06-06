@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.coderslab.letsbetnow.resourses.FakerService;
+import pl.coderslab.letsbetnow.resources.FakerService;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.service.EventService;

@@ -21,6 +21,8 @@ public class EventDto {
 
     private String racecourse;
 
+    private int distance;
+
     private List<HorseDto> horses;
 
     private List<BetDto> bets;
@@ -74,6 +76,14 @@ public class EventDto {
 
     public void setRacecourse(String racecourse) {
         this.racecourse = racecourse;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public List<HorseDto> getHorses() {

@@ -19,9 +19,6 @@ public class Horse {
 
     private int age;
 
-    @OneToOne
-    private Odds odds;
-
     @OneToMany(mappedBy = "horse")
     private List<Bet> bets;
 
@@ -62,14 +59,6 @@ public class Horse {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public Odds getOdds() {
-        return odds;
-    }
-
-    public void setOdds(Odds odds) {
-        this.odds = odds;
     }
 
     public List<Bet> getBets() {

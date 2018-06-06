@@ -42,5 +42,20 @@ public class EventsHorsesServiceImpl implements EventsHorsesService {
         return eventsHorsesRepository.findAllByHorse(horse);
     }
 
+    @Override
+    public List<EventsHorses> findAllByHorseAndEvent(Horse horse, Event event) {
+        return eventsHorsesRepository.findAllByHorseAndEvent(horse,event);
+    }
+
+    @Override
+    public List<EventsHorses> findAllByHorseId(Long id) {
+        return eventsHorsesRepository.findAllByHorseId(id);
+    }
+
+    @Override
+    public List<EventsHorses> findAllByEventId(Long id) {
+        return eventsHorsesRepository.findAllByEventId(id);
+    }
+
 
 }

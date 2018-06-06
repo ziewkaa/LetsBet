@@ -24,9 +24,6 @@ public class Jockey {
     @OneToMany(mappedBy = "jockey")
     private List<Horse> horses;
 
-    @ManyToOne
-    private Event event;
-
     public Jockey() {
     }
 
@@ -69,4 +66,5 @@ public class Jockey {
     public void setHorses(List<Horse> horses) {
         this.horses = horses;
     }
+
 }

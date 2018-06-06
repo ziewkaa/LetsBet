@@ -39,5 +39,11 @@ public class HorseControllerRest {
 
     }
 
+    @GetMapping("/event/{id}")
+    public List<HorseDto> getHorsesByEventId(@PathVariable Long id) {
+
+        return horseDtoService.getHorsesByEventId(id);
+
+    }
 
 }

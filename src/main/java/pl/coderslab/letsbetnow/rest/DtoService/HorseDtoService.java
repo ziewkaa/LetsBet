@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import pl.coderslab.letsbetnow.model.*;
 import pl.coderslab.letsbetnow.rest.Dto.BetDto;
+import pl.coderslab.letsbetnow.rest.Dto.EventsHorsesDto;
 import pl.coderslab.letsbetnow.rest.Dto.HorseDto;
 import pl.coderslab.letsbetnow.service.*;
 
@@ -21,20 +22,13 @@ public class HorseDtoService {
     private HorseService horseService;
 
     @Autowired
-    private TrainerService trainerService;
+    private EventService eventService;
 
     @Autowired
     private BetDtoService betDtoService;
 
-    public Trainer getTrainer(Horse horse){
-
-        return trainerService.findOneByHorses(horse);
-    }
-
-    public Jockey getJockey(Horse horse){
-
-        return jockeyService.findJockeyByHorses(horse);
-    }
+    @Autowired
+    private EventsHorsesDtoService eventsHorsesDtoService;
 
     public List<HorseDto> getAllHorses() {
         List<Horse> horses = horseService.findAllHorses();
@@ -42,15 +36,26 @@ public class HorseDtoService {
         return horseDtos;
     }
 
+    public List<HorseDto> getHorsesByEventId(Long id) {
+
+//        Event event = eventService.findEventById(id);
+        List<EventsHorsesDto> ehdList = eventsHorsesDtoService.getEventsHorsesByEventId(id);
+        List<HorseDto> horseDtos = new ArrayList<>();
+
+        for (EventsHorsesDto ehd : ehdList) {
+            HorseDto horse = getHorseById(ehd.getHorse());
+            horseDtos.add(horse);
+        }
+        return horseDtos;
+    }
+
     public List<HorseDto> getHorses(List<Horse> horses){
 
         List<HorseDto> horseDtos = new ArrayList<>();
-
         for(Horse horse : horses) {
             HorseDto horseDto = getHorse(horse);
             horseDtos.add(horseDto);
         }
-
         return horseDtos;
     }
 

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import pl.coderslab.letsbetnow.model.*;
-import pl.coderslab.letsbetnow.resourses.FakerService;
+import pl.coderslab.letsbetnow.resources.FakerService;
 import pl.coderslab.letsbetnow.service.*;
 
 import java.math.BigDecimal;

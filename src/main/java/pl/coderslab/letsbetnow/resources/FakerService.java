@@ -1,7 +1,9 @@
-package pl.coderslab.letsbetnow.faker;
+package pl.coderslab.letsbetnow.resources;
 
 import com.github.javafaker.Faker;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.coderslab.letsbetnow.model.*;
 import pl.coderslab.letsbetnow.repository.EventsHorsesRepository;
@@ -30,7 +32,7 @@ public class FakerService {
     private EventService eventService;
 
     @Autowired
-    private EventsHorsesService eventHorsesService ;
+    private EventsHorsesService eventsHorsesService;
 
     @Autowired
     private EventsHorsesRepository eventsHorsesRepository;
@@ -87,14 +89,33 @@ public class FakerService {
 
         for (Horse horse : horseService.findAllHorses()) {
             History history = new History();
-            Random randomHistory = new Random();
-            int winsHistory = randomHistory.nextInt(30)+1;
-            int placeHistory = randomHistory.nextInt(30)+1;
-            int showHistory = randomHistory.nextInt(30)+1;
-            history.setWins(winsHistory);
-            history.setPlaces(placeHistory);
-            history.setShows(showHistory);
             history.setHorse(horse);
+
+            int wins = 0;
+            int places = 0;
+            int shows = 0;
+
+            List<EventsHorses> eventsHorses = eventsHorsesService.findAllByHorse(horse);
+            for (EventsHorses eh : eventsHorses) {
+                Random randomPosition = new Random();
+                if (eh.getEvent().getStatus().equals("Approved") && LocalDate.now().isAfter(eh.getEvent().getStartDate())) {
+
+                    List<Integer> positions = new ArrayList<>(Arrays.asList(1,2,3,4,5,6));
+                    eh.setPosition(positions.get(randomPosition.nextInt(5)));
+                }
+                 if (eh.getPosition() == 1){
+                     wins++;
+                 } else if (eh.getPosition() == 2) {
+                     places++;
+                 } else if (eh.getPosition() == 3) {
+                     shows++;
+                 }
+                 eventsHorsesService.saveEventsHorses(eh);
+            }
+
+            history.setWins(wins);
+            history.setShows(shows);
+            history.setPlaces(places);
             historyService.saveHistory(history);
             horse.setHistory(history);
             horseService.saveHorse(horse);
@@ -103,18 +124,22 @@ public class FakerService {
 
     public void getEvents() {
 
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 80; i++) {
             Random random = new Random();
             Event event = new Event();
             List<String> racecourses = new ArrayList<>(Arrays.asList("Ascot", "Hamilton Park", "Hexham", "Kempton Park", "Leicester", "Newbury", "Newcastle", "Perth", "Warwick", "Windsor"));
             List<Integer> distances = new ArrayList<>(Arrays.asList(1400, 1600, 1800, 2000, 2200, 2500));
-            List<Integer> minutes = new ArrayList<>(Arrays.asList(2,5, 10, 15, 20, 25, 30, 35, 40, 45));
-            LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(10)));
-//            LocalTime currentTime = LocalTime.now().plusMinutes(2);
+            List<Integer> minutes = new ArrayList<>(Arrays.asList(1, 3, 5, 10));
+            LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(4)));
             event.setStartTime(currentTime);
-            event.setStatus("Planned");
-            event.setStartDate(LocalDate.now().plusDays(random.nextInt(5)));
-            event.setEndTime(event.getStartTime().plusMinutes(5));
+            if (i < 40) {
+                event.setStartDate(LocalDate.now().plusDays(random.nextInt(5)));
+                event.setStatus("Planned");
+            } else {
+                event.setStartDate(LocalDate.now().minusDays(random.nextInt(5)));
+                event.setStatus("Approved");
+            }
+            event.setEndTime(event.getStartTime().plusMinutes(3));
             event.setRacecourse(racecourses.get(random.nextInt(racecourses.size())));
             event.setDistance(distances.get(random.nextInt(distances.size())));
             eventService.saveEvent(event);
@@ -130,28 +155,26 @@ public class FakerService {
             List<Horse> horses = new ArrayList<>();
 
             while (horses.size() < 6) {
-                Horse horse = horseService.findHorseById((long) random.nextInt(90));
+                Horse horse = horseService.findHorseById((long) random.nextInt(89)+1);
 
                 while (horses.contains(horse)) {
-                    horse = horseService.findHorseById((long) random.nextInt(90));
+                    horse = horseService.findHorseById((long) random.nextInt(89)+1);
                 }
-
                 horses.add(horse);
             }
-
             for (Horse horse : horses){
                 EventsHorses eventsHorses = new EventsHorses();
                 eventsHorses.setEvent(event);
                 eventsHorses.setHorse(horse);
                 eventsHorses.setPosition(0);
-                eventHorsesService.saveEventsHorses(eventsHorses);
+                eventsHorsesService.saveEventsHorses(eventsHorses);
             }
         }
     }
 
     public void getOdds() {
 
-        List<EventsHorses> horses = eventHorsesService.findAllEventsAndHorses();
+        List<EventsHorses> horses = eventsHorsesService.findAllEventsAndHorses();
         double baseWin = 1;
         double basePlace = 2;
         double baseShow = 3;
@@ -166,7 +189,7 @@ public class FakerService {
             odds.setEventsHorses(eventsHorses);
             oddsService.saveOdds(odds);
             eventsHorses.setOdds(odds);
-            eventHorsesService.saveEventsHorses(eventsHorses);
+            eventsHorsesService.saveEventsHorses(eventsHorses);
         }
     }
 

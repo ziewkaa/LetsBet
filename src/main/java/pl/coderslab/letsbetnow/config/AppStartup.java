@@ -5,12 +5,12 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import pl.coderslab.letsbetnow.faker.FakerService;
+import pl.coderslab.letsbetnow.resources.FakerService;
 import pl.coderslab.letsbetnow.model.User;
+import pl.coderslab.letsbetnow.service.EventService;
 import pl.coderslab.letsbetnow.service.UserService;
 
 import java.time.LocalDate;
-import java.util.concurrent.TimeUnit;
 
 @Order
 @Component
@@ -22,6 +22,9 @@ public class AppStartup implements ApplicationRunner {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventService eventService;
+
     @Override
     public void run (ApplicationArguments args) throws Exception {
 
@@ -29,10 +32,11 @@ public class AppStartup implements ApplicationRunner {
         fakerService.getTrainers();
         fakerService.getJockeys();
         fakerService.getHorses();
-        fakerService.getHorsesHistory();
         fakerService.getEvents();
         fakerService.getEventsHorses();
         fakerService.getOdds();
+        eventService.setRandomEventLive();
+        fakerService.getHorsesHistory();
 
     }
 

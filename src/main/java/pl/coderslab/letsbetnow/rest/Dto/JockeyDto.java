@@ -18,7 +18,7 @@ public class JockeyDto {
 
     private List<HorseDto> horses;
 
-    private EventDto event;
+    private List<EventDto> events;
 
     public JockeyDto() {
     }
@@ -63,11 +63,11 @@ public class JockeyDto {
         this.horses = horses;
     }
 
-    public EventDto getEvent() {
-        return event;
+    public List<EventDto> getEvents() {
+        return events;
     }
 
-    public void setEvent(EventDto event) {
-        this.event = event;
+    public void setEvents(List<EventDto> events) {
+        this.events = events;
     }
 }

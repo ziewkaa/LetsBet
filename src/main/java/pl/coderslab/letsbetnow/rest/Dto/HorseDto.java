@@ -20,8 +20,6 @@ public class HorseDto {
 
     private List<BetDto> bets = new ArrayList<>();
 
-    private List<EventsHorses> eventsHorses;
-
     private String jockeyFirstName;
 
     private String jockeyLastName;
@@ -64,14 +62,6 @@ public class HorseDto {
 
     public void setBets(List<BetDto> bets) {
         this.bets = bets;
-    }
-
-    public List<EventsHorses> getEventsHorses() {
-        return eventsHorses;
-    }
-
-    public void setEventsHorses(List<EventsHorses> eventsHorses) {
-        this.eventsHorses = eventsHorses;
     }
 
     public String getJockeyFirstName() {
