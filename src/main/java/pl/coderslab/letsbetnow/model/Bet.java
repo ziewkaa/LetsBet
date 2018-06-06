@@ -13,6 +13,8 @@ public class Bet {
 
     private LocalDateTime registered;
 
+    private boolean approved = false;
+
     @ManyToOne
     private Horse horse;
 
@@ -93,5 +95,14 @@ public class Bet {
 
     public void setBetType(String betType) {
         this.betType = betType;
+    }
+
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

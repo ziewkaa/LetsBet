@@ -13,6 +13,9 @@ public class Odds {
     @OneToOne
     private EventsHorses eventsHorses;
 
+    @OneToMany
+    private List<Bet> bets;
+
     private double winValue;
 
     private double placeValue;
@@ -60,5 +63,13 @@ public class Odds {
 
     public void setShowValue(double showValue) {
         this.showValue = showValue;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
     }
 }

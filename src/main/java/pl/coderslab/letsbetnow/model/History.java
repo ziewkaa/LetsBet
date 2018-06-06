@@ -1,10 +1,12 @@
 package pl.coderslab.letsbetnow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class History {
 
     @Id
