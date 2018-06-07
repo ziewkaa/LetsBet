@@ -26,6 +26,7 @@
             <p><a th:href="@{/wallet/home}">My Wallet</a></p>
             <p><a th:href="@{/user/bets}">My Bets</a></p>
             <p><a th:href="@{/user/edit}">My Account</a></p>
+            <p><a th:href="@{/user/live}">My Live Results</a></p>
             <!--<p><a th:href="@{/api/edit}">Api</a></p>-->
           </div>
 
@@ -34,7 +35,7 @@
             <p><a th:href="@{/user/all}">Search Users</a></p>
           </div>
 
-          <div >
+          <div>
             <form th:action="@{/home/next}" method="post">
                 <input type="hidden" name="date" th:value="${date}"/>
                 <input type="submit" value="Next day >"/>
@@ -48,10 +49,9 @@
             </form>
           </div>
 
-       <div>
+       <span th:if="${#lists.isEmpty(upcomingEvents)} == false">
         <h2>Upcoming Events:</h2>
-
-         <div class="events" th:each="event : ${events}" th:object="${event}">
+         <div class="events" th:each="event : ${upcomingEvents}" th:object="${event}">
             <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
                <table style="text-align: center; padding: 10px; margin: 5px;">
                     <tr>
@@ -73,11 +73,10 @@
 
             </div>
          </div>
-        </div>
+        </span>
 
         <span th:if="${#lists.isEmpty(liveEvents)} == false">
          <h2>Live Events:</h2>
-
                   <div class="events" th:each="event : ${liveEvents}" th:object="${event}">
                      <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
                         <table style="text-align: center; padding: 10px; margin: 5px;">
@@ -99,5 +98,29 @@
                      </div>
                   </div>
               </span>
+
+              <span th:if="${#lists.isEmpty(endedEvents)} == false">
+                       <h2>Ended Events:</h2>
+                                <div class="events" th:each="event : ${endedEvents}" th:object="${event}">
+                                   <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
+                                      <table style="text-align: center; padding: 10px; margin: 5px;">
+                                           <tr>
+                                               <td >Date</td>
+                                               <td >Time</td>
+                                               <td >Racecourse</td>
+                                               <td >Distance</td>
+                                               <td >Results</td>
+                                          </tr>
+                                          <tr>
+                                               <td th:text="*{startDate}"></td>
+                                               <td th:text="*{startTime}"></td>
+                                               <td th:text="*{racecourse}"></td>
+                                               <td th:text="*{distance}"></td>
+                                               <td><a th:href="@{/event/{id}(id=${event.id})}"> View </a></td>
+                                          </tr>
+                                      </table>
+                                   </div>
+                                </div>
+                            </span>
        </body>
 </html>

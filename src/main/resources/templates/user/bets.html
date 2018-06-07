@@ -22,63 +22,111 @@
 
     </head>
     <body>
-                <div class="bets">
-                    <h2>Active Bets:</h2>
+
+            <div class="bets">
+                <h2>Active Bets:</h2>
+                    <div class="bets">
                         <table>
                             <tr>
                                 <th>No.</th>
-                                <th>Event</th>
+                                <th>Event ID</th>
+                                <th>Racecourse</th>
                                 <th>Horse</th>
                                 <th>Registered</th>
                                 <th>Type</th>
                                 <th>Odd Value</th>
                                 <th>Bet Value</th>
-                                <th>Prize</th>
+                                <th>Estimated Result</th>
                             </tr>
-                            <tr th:each="bet , iterStat : ${bets}" th:object="${bet}">
-                            <span th:if="${bet.active} == true">
+
+                            <div th:if="${#lists.isEmpty(betsActive)} == true">
+                                <p>You have no active bets</p>
+                            </div>
+                            <span th:if="${#lists.isEmpty(betsActive)} == false">
+                                <tr th:each="bet , iterStat : ${betsActive}" th:object="${bet}">
+                                    <td th:text="${iterStat.count}"></td>
+                                    <td th:text="*{event.id}"></td>
+                                    <td th:text="*{event.racecourse}"></td>
+                                    <td th:text="*{horse.name}"></td>
+                                    <td th:text="*{registered}"></td>
+                                    <td th:text="*{betType}"></td>
+                                    <td th:text="*{oddValue}"></td>
+                                    <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
+                                    <td th:text="${bet.oddValue * bet.betValue}"></td>
+                                </tr>
+                             </span>
+                      </table>
+                </div>
+
+            <div class="bets">
+                <h2>Waiting Bets:</h2>
+                <div class="bets">
+                    <table>
+                        <tr>
+                            <th>No.</th>
+                            <th>Event ID</th>
+                            <th>Racecourse</th>
+                            <th>Horse</th>
+                            <th>Registered</th>
+                            <th>Type</th>
+                            <th>Odd Value</th>
+                            <th>Bet Value</th>
+                            <th>Prize</th>
+                        </tr>
+
+                        <div th:if="${#lists.isEmpty(betsWaiting)} == true">
+                            <p>You have no waiting bets</p>
+                        </div>
+                        <span th:if="${#lists.isEmpty(betsWaiting)} == false">
+                            <tr th:each="bet , iterStat : ${betsWaiting}" th:object="${bet}">
                                 <td th:text="${iterStat.count}"></td>
                                 <td th:text="*{event.id}"></td>
-                                <td th:text="*{horse.id}"></td>
+                                <td th:text="*{event.racecourse}"></td>
+                                <td th:text="*{horse.name}"></td>
                                 <td th:text="*{registered}"></td>
                                 <td th:text="*{betType}"></td>
                                 <td th:text="*{oddValue}"></td>
                                 <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
-                                <td></td>
-                            </span>
+                                <td th:text="${bet.oddValue * bet.betValue}"></td>
                             </tr>
-                      </table>
+                        </span>
+                    </table>
                 </div>
+           </div>
 
            <div class="bets">
-                      <h2>Recent Bets:</h2>
+               <h2>Approved Bets:</h2>
+             <div class="bets">
                  <table>
                     <tr>
                         <th>No.</th>
-                        <th>Event</th>
+                        <th>Event ID</th>
+                        <th>Racecourse</th>
                         <th>Horse</th>
-                        <th>Date Registered</th>
-                        <th>Time Registered</th>
+                        <th>Registered</th>
                         <th>Type</th>
                         <th>Odd Value</th>
                         <th>Bet Value</th>
                         <th>Prize</th>
                     </tr>
-                        <tr th:each="bet , iterStat : ${bets}" th:object="${bet}">
-                        <span th:if="${bet.active} == false">
+                    <div th:if="${#lists.isEmpty(betsApproved)} == true">
+                         <p>You have no approved bets</p>
+                    </div>
+                    <span th:if="${#lists.isEmpty(betsApproved)} == false">
+                        <tr th:each="bet , iterStat : ${betsApproved}" th:object="${bet}">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="*{event.id}"></td>
-                            <td th:text="*{horse.id}"></td>
-                            <td th:text="*{registered}"></td>
+                            <td th:text="*{event.racecourse}"></td>
+                            <td th:text="*{horse.name}"></td>
                             <td th:text="*{registered}"></td>
                             <td th:text="*{betType}"></td>
                             <td th:text="*{oddValue}"></td>
                             <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
-                            <td></td>
-                        </span>
+                            <td>0.0</td>
                         </tr>
+                    </span>
                 </table>
             </div>
-
+        </div>
     </body>
 </html>
