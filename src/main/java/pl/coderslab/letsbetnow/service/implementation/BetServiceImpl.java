@@ -3,6 +3,7 @@ package pl.coderslab.letsbetnow.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderslab.letsbetnow.model.Bet;
+import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.repository.BetRepository;
@@ -45,5 +46,10 @@ public class BetServiceImpl implements BetService {
     @Override
     public List<Bet> findAllBetsByHorseId(Long id) {
         return betRepository.findAllByHorseId(id);
+    }
+
+    @Override
+    public List<Bet> findAllBetsByEvent(Event event) {
+        return betRepository.findAllByEvent(event);
     }
 }

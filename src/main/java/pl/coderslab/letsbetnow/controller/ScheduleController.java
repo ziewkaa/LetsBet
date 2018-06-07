@@ -66,7 +66,7 @@ public class ScheduleController {
 
     }
 
-    @Scheduled(cron = ("0/5 * * * * ?"))
+    @Scheduled(cron = ("0/10 * * * * ?"))
     public void setPositions() {
 
         List<Event> events = eventService.findAllEventsByStatus("Live");
@@ -76,7 +76,7 @@ public class ScheduleController {
             // checks start time
             if (event.getEndTime().isAfter(LocalTime.now())) {
 
-                //gets all horses starting in event
+                //gets all details for  event
                 List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
                 List<Integer> positions = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
                 Collections.shuffle(positions);
@@ -85,9 +85,9 @@ public class ScheduleController {
                 int counter = 0;
                 while (counter < eventsHorses.size()) {
                     for (EventsHorses horse : eventsHorses) {
-                      horse.setPosition(positions.get(counter));
-                      eventsHorsesService.saveEventsHorses(horse);
-                      counter++;
+                        horse.setPosition(positions.get(counter));
+                        eventsHorsesService.saveEventsHorses(horse);
+                        counter++;
                     }
                 }
             }
@@ -124,52 +124,48 @@ public class ScheduleController {
     @Scheduled(cron = ("0/30 * * * * ?"))
     public void checkRaceBets() {
 
-        List<EventsHorses> events = eventsHorsesService.findAllByEventStatus("Ended");
-        List<Bet> bets = betService.findAllBets();
-
-        for (EventsHorses event : events) {
+        List<Event> events = eventService.findAllEventsByStatus("Ended");
+        for (Event event : events) {
+            List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
+            List<Bet> bets = betService.findAllBetsByEvent(event);
+            event.setStatus("Approved");
+            eventService.saveEvent(event);
             for (Bet bet : bets) {
+                checkBetsPrize(eventsHorses, bet);
                 bet.setApproved(true);
-                event.getEvent().setStatus("Approved");
-                switch (bet.getBetType()) {
-                    case "Win":
-                        if (event.getEvent().equals(bet.getEvent())) {
-                            if (event.getHorse().equals(bet.getHorse())) {
-                                if (event.getPosition() == 1) {
-                                    calculatePrize(bet);
-                                }
-                            }
-                        }
-                        break;
+            }
+        }
+    }
 
-                    case "Place" :
-                        if (event.getEvent().equals(bet.getEvent())) {
-                            if (event.getHorse().equals(bet.getHorse())) {
-                                if (event.getPosition() == 2) {
-                                    calculatePrize(bet);
-                                }
-                            }
-                        }
-                        break;
+    private void checkBetsPrize(List<EventsHorses> events, Bet bet) {
 
-                    case "Show":
-                        if (event.getEvent().equals(bet.getEvent())) {
-                            if (event.getHorse().equals(bet.getHorse())) {
-                                if (event.getPosition() == 3) {
-                                    calculatePrize(bet);
-                                }
-                            }
-                        }
-                        break;
+        for (EventsHorses eventsHorses : events) {
+            if (bet.getBetType().equals("Win")) {
+                if (eventsHorses.getHorse().getName().equals(bet.getHorse().getName())) {
+                    if (eventsHorses.getPosition() == 1) {
+                        calculatePrize(eventsHorses.getOdds().getWinValue(), bet);
+                    }
+                }
+            } else if (bet.getBetType().equals("Place")) {
+                if (eventsHorses.getHorse().equals(bet.getHorse())) {
+                    if (eventsHorses.getPosition() == 2) {
+                        calculatePrize(eventsHorses.getOdds().getPlaceValue(), bet);
+                    }
+                }
+            } else if (bet.getBetType().equals("Show")) {
+                if (eventsHorses.getHorse().equals(bet.getHorse())) {
+                    if (eventsHorses.getPosition() == 3) {
+                        calculatePrize(eventsHorses.getOdds().getShowValue(), bet);
+                    }
                 }
             }
         }
     }
 
-    private void calculatePrize(Bet bet) {
+    private void calculatePrize(double value, Bet bet) {
         User user = bet.getUser();
         BigDecimal funds = user.getFunds();
-        double prize = bet.getBetValue() * bet.getOddValue();
+        double prize = bet.getBetValue() * value;
         funds = funds.add(BigDecimal.valueOf(prize));
         user.setFunds(funds);
         userService.saveUser(user);

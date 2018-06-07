@@ -85,6 +85,27 @@ public class FakerService {
         }
     }
 
+    public void getStatisticsForPastEvents(){
+
+        List<Event> events = eventService.findAllEvents();
+        for (Event event : events) {
+            if (event.getStatus().equals("Approved") && LocalDate.now().isAfter(event.getStartDate())) {
+                List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
+                List<Integer> positions = new ArrayList<>();
+                Random randomPosition = new Random();
+                for (EventsHorses eh : eventsHorses) {
+                    int position = randomPosition.nextInt(6)+1;
+                    while (positions.contains(position)) {
+                        position = randomPosition.nextInt(6) + 1;
+                    }
+                    positions.add(position);
+                    eh.setPosition(position);
+                    eventsHorsesService.saveEventsHorses(eh);
+                }
+            }
+        }
+    }
+
     public void getHorsesHistory() {
 
         for (Horse horse : horseService.findAllHorses()) {
@@ -97,20 +118,14 @@ public class FakerService {
 
             List<EventsHorses> eventsHorses = eventsHorsesService.findAllByHorse(horse);
             for (EventsHorses eh : eventsHorses) {
-                Random randomPosition = new Random();
-                if (eh.getEvent().getStatus().equals("Approved") && LocalDate.now().isAfter(eh.getEvent().getStartDate())) {
 
-                    List<Integer> positions = new ArrayList<>(Arrays.asList(1,2,3,4,5,6));
-                    eh.setPosition(positions.get(randomPosition.nextInt(5)));
+                if (eh.getPosition() == 1) {
+                    wins++;
+                } else if (eh.getPosition() == 2) {
+                    places++;
+                } else if (eh.getPosition() == 3) {
+                    shows++;
                 }
-                 if (eh.getPosition() == 1){
-                     wins++;
-                 } else if (eh.getPosition() == 2) {
-                     places++;
-                 } else if (eh.getPosition() == 3) {
-                     shows++;
-                 }
-                 eventsHorsesService.saveEventsHorses(eh);
             }
 
             history.setWins(wins);

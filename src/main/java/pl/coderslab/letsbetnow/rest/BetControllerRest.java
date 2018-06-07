@@ -1,5 +1,6 @@
 package pl.coderslab.letsbetnow.rest;
 
+import io.swagger.annotations.SwaggerDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,14 +34,16 @@ public class BetControllerRest {
         return bets;
     }
 
-    @GetMapping("/{id}")
-    public List<BetDto> getBetById(@PathVariable Long id) {
+    @GetMapping("/event/{id}")
+    public List<BetDto> getAllBetsByEventId(@PathVariable Long id) {
 
-        List<BetDto> bets = new ArrayList<>();
-        for (Bet bet : betService.findAllBets()) {
-            bets.add(betDtoService.getBet(bet));
-        }
-        return bets;
+        return betDtoService.getAllBetsByEventId(id);
+    }
+
+    @GetMapping("/horse/{id}")
+    public List<BetDto> getAllBetsByHorseId(@PathVariable Long id) {
+
+        return betDtoService.getAllBetsByHorseId(id);
     }
 
 

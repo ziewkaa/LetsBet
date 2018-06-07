@@ -72,9 +72,9 @@ public class EventServiceImpl implements EventService {
 
         Random randomEvent = new Random();
 
-        Event event = eventRepository.findByIdAndStartDate((long)randomEvent.nextInt(40), LocalDate.now());
+        Event event = eventRepository.findByIdAndStartDate((long)randomEvent.nextInt(80)+1, LocalDate.now());
         while (event == null) {
-            event = eventRepository.findByIdAndStartDate((long)randomEvent.nextInt(40), LocalDate.now());
+            event = eventRepository.findByIdAndStartDate((long)randomEvent.nextInt(80)+1, LocalDate.now());
         }
         event.setStartTime(LocalTime.now());
         event.setStatus("Live");

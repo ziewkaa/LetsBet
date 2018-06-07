@@ -2,9 +2,7 @@ package pl.coderslab.letsbetnow.rest.DtoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import pl.coderslab.letsbetnow.model.*;
-import pl.coderslab.letsbetnow.rest.Dto.BetDto;
 import pl.coderslab.letsbetnow.rest.Dto.EventsHorsesDto;
 import pl.coderslab.letsbetnow.rest.Dto.HorseDto;
 import pl.coderslab.letsbetnow.service.*;
@@ -76,7 +74,7 @@ public class HorseDtoService {
         horseDto.setJockeyLastName(horse.getJockey().getLastName());
         horseDto.setTrainerFirstName(horse.getTrainer().getFirstName());
         horseDto.setTrainerLastName(horse.getTrainer().getLastName());
-        horseDto.setBets(betDtoService.getBetsByHorseId(horse.getId()));
+        horseDto.setBets(betDtoService.getAllBetsByHorseId(horse.getId()));
         return horseDto;
     }
 

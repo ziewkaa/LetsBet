@@ -26,6 +26,7 @@ public class Bet {
 
     private Double betValue;
 
+    //bin
     private Double oddValue;
 
     private String betType;

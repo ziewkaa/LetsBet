@@ -1,6 +1,7 @@
 package pl.coderslab.letsbetnow.service;
 
 import pl.coderslab.letsbetnow.model.Bet;
+import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.model.User;
 
@@ -20,5 +21,5 @@ public interface BetService {
 
     List<Bet> findAllBetsByHorseId(Long id);
 
-//    List<Bet> findAllBetsByHorseId(Long id);
+    List<Bet> findAllBetsByEvent(Event event);
 }

@@ -34,6 +34,7 @@ public class AppStartup implements ApplicationRunner {
         fakerService.getHorses();
         fakerService.getEvents();
         fakerService.getEventsHorses();
+        fakerService.getStatisticsForPastEvents();
         fakerService.getOdds();
         eventService.setRandomEventLive();
         fakerService.getHorsesHistory();

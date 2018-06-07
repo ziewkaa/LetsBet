@@ -16,7 +16,7 @@ public class BetDtoService {
     @Autowired
     private BetService betService;
 
-    public List<BetDto> getBetsByHorseId(Long id) {
+    public List<BetDto> getAllBetsByHorseId(Long id) {
 
         List<BetDto> betDtos = new ArrayList<>();
         List<Bet> bets = betService.findAllBetsByHorseId(id);
@@ -28,7 +28,7 @@ public class BetDtoService {
         return betDtos;
     }
 
-    public List<BetDto> getBetsByEventId(Long id) {
+    public List<BetDto> getAllBetsByEventId(Long id) {
 
         List<BetDto> betDtos = new ArrayList<>();
         List<Bet> bets = betService.findAllBetsByEventId(id);
