@@ -35,9 +35,6 @@ public class FakerService {
     private EventsHorsesService eventsHorsesService;
 
     @Autowired
-    private EventsHorsesRepository eventsHorsesRepository;
-
-    @Autowired
     private OddsService oddsService;
 
     public void getTrainers() {
@@ -89,7 +86,7 @@ public class FakerService {
 
         List<Event> events = eventService.findAllEvents();
         for (Event event : events) {
-            if (event.getStatus().equals("Approved") && LocalDate.now().isAfter(event.getStartDate())) {
+            if (event.getStatus().equals("Approved") && LocalTime.now().isAfter(event.getStartTime())) {
                 List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
                 List<Integer> positions = new ArrayList<>();
                 Random randomPosition = new Random();
@@ -140,22 +137,29 @@ public class FakerService {
     public void getEvents() {
 
         for (int i = 0; i < 80; i++) {
+            int counter = 0;
             Random random = new Random();
             Event event = new Event();
             List<String> racecourses = new ArrayList<>(Arrays.asList("Ascot", "Hamilton Park", "Hexham", "Kempton Park", "Leicester", "Newbury", "Newcastle", "Perth", "Warwick", "Windsor"));
             List<Integer> distances = new ArrayList<>(Arrays.asList(1400, 1600, 1800, 2000, 2200, 2500));
             List<Integer> minutes = new ArrayList<>(Arrays.asList(1, 3, 5, 10));
             LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(4)));
-            event.setStartTime(currentTime);
+
             if (i < 40) {
-                event.setStartDate(LocalDate.now().plusDays(random.nextInt(5)));
+                event.setStartTime(currentTime);
+                event.setStartDate(LocalDate.now().plusDays(random.nextInt(4)));
                 event.setStatus("Planned");
             } else {
-                event.setStartDate(LocalDate.now().minusDays(random.nextInt(5)));
+                event.setStartTime(currentTime.minusHours(random.nextInt(3)+1));
+                event.setStartDate(LocalDate.now().minusDays(random.nextInt(4)+1));
                 event.setStatus("Approved");
             }
+
             event.setEndTime(event.getStartTime().plusMinutes(3));
-            event.setRacecourse(racecourses.get(random.nextInt(racecourses.size())));
+            if (counter > 9){
+                counter = 0;
+            }
+            event.setRacecourse(racecourses.get(random.nextInt(9)));
             event.setDistance(distances.get(random.nextInt(distances.size())));
             eventService.saveEvent(event);
         }
