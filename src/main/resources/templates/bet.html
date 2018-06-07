@@ -23,15 +23,15 @@
 
                     <h3>Confirm Bet:</h3>
 
-                    <p> Event: <span th:object="${event}" th:text="*{racecourse}"/></p>
+                    <p> Event: <span th:object="${event}" th:text="*{racecourse}"></span></p>
                         <input type="hidden" name="event" th:value="${event.id}"/>
-                    <p> Horse: <span th:object="${horse}" th:text="*{name}"/></p>
+                    <p> Horse: <span th:object="${horse}" th:text="*{name}"></span></p>
                         <input type="hidden" name="horse" th:value="${horse.id}"/>
 
-                    <p> Type: <span th:text="${bet.betType}"/></p>
+                    <p> Type: <span th:text="${bet.betType}"></span></p>
                         <input type="hidden" name="betType" th:value="${bet.betType}"/>
 
-                    <p> Odd Value: <span th:text="${bet.oddValue}"/></p>
+                    <p> Odd Value: <span th:text="${bet.oddValue}"></span></p>
                         <input type="hidden" name="oddValue" th:value="${bet.oddValue}"/>
                 </div >
 

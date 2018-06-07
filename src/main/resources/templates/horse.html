@@ -9,16 +9,47 @@
 </head>
 
     <body>
-        <div class="details" th:object="${horse}">
-
+        <div class="details">
+            <h3>Horse Details:</h3>
            <table>
                 <tr>
-                    <th>Name</th><th>Age</th><th>Trainer</th><th>Wins</th><th>Places</th><th>Shows</th><th></th>
+                    <th>Name</th><th>Age</th><th>Trainer</th>
                 </tr>
                 <tr>
-                    <th th:text="*{name}"></th><th th:text="*{age}"></th><th th:text="*{trainer.firstName} *{trainer.lastName} "></th><th th:text="*{history.wins}"></th><th th:text="*{history.places}"></th><th th:text="*{history.shows}"></th>
+                    <td th:text="${horse.name}"></td><td th:text="${horse.age}"></td><td><span th:text="${horse.trainer.firstName}"/> <span th:text="${horse.trainer.lastName}"/></td>
                 </tr>
             </table>
+
+            <h3>Races Results:</h3>
+            <table>
+                <tr>
+                    <th>Win</th><th>Place</th><th>Show</th>
+                </tr>
+                <tr >
+                    <td th:text="${history.wins}"></td>
+                    <td th:text="${history.places}"></td>
+                    <td th:text="${history.shows}"></th>
+                </tr>
+            </table>
+
+            <h3>Races History:</h3>
+                <table>
+                    <tr>
+                        <th>No.</th><th>Racecourse</th><th>View</th><th>Date</th><th>Position</th>
+                    </tr>
+                    <tr th:each="event, iterStat : ${events}" th:object="${event}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${event.event.racecourse}"></td>
+                        <td th:text="${event.event.startDate}"></td>
+                        <td><a th:href="@{/event/{id}(id=${event.event.id})}">Go</a></td>
+                        <span th:if="${event.position} == 0">
+                            <td>N/A</td>
+                        </span>
+                        <span th:if="${event.position} != 0">
+                         <td th:text="${event.position}"></td>
+                        </span>
+                    </tr>
+             </table>
 
         </div>
 

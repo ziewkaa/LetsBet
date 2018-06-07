@@ -7,11 +7,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Welcome</title>
+        <style>
+
+            .bets {
+                max-width: 60%;
+                align-content: center;
+                border: 1 px solid black;
+            }
+            table, td{
+                padding: 10px;
+            }
+
+        </style>
 
     </head>
     <body>
-            <div class="bets" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
-                    <h2>Bets:</h2>
+                <div class="bets">
+                    <h2>Active Bets:</h2>
                         <table>
                             <tr>
                                 <th>No.</th>
@@ -19,11 +31,12 @@
                                 <th>Horse</th>
                                 <th>Registered</th>
                                 <th>Type</th>
-                                <th>Odd Vale</th>
-                                <th>Bet Vale</th>
+                                <th>Odd Value</th>
+                                <th>Bet Value</th>
                                 <th>Prize</th>
                             </tr>
                             <tr th:each="bet , iterStat : ${bets}" th:object="${bet}">
+                            <span th:if="${bet.active} == true">
                                 <td th:text="${iterStat.count}"></td>
                                 <td th:text="*{event.id}"></td>
                                 <td th:text="*{horse.id}"></td>
@@ -31,11 +44,41 @@
                                 <td th:text="*{betType}"></td>
                                 <td th:text="*{oddValue}"></td>
                                 <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
-                                <td>Prize</td>
-                                <td> </td>
+                                <td></td>
+                            </span>
                             </tr>
-                        </table>
-                    </div>
+                      </table>
+                </div>
+
+           <div class="bets">
+                      <h2>Recent Bets:</h2>
+                 <table>
+                    <tr>
+                        <th>No.</th>
+                        <th>Event</th>
+                        <th>Horse</th>
+                        <th>Date Registered</th>
+                        <th>Time Registered</th>
+                        <th>Type</th>
+                        <th>Odd Value</th>
+                        <th>Bet Value</th>
+                        <th>Prize</th>
+                    </tr>
+                        <tr th:each="bet , iterStat : ${bets}" th:object="${bet}">
+                        <span th:if="${bet.active} == false">
+                            <td th:text="${iterStat.count}"></td>
+                            <td th:text="*{event.id}"></td>
+                            <td th:text="*{horse.id}"></td>
+                            <td th:text="*{registered}"></td>
+                            <td th:text="*{registered}"></td>
+                            <td th:text="*{betType}"></td>
+                            <td th:text="*{oddValue}"></td>
+                            <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
+                            <td></td>
+                        </span>
+                        </tr>
+                </table>
+            </div>
 
     </body>
 </html>

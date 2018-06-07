@@ -23,14 +23,35 @@
           <p>Welcome <span sec:authentication="name"></span> !</p>
 
           <div>
-            <p><a th:href="@{/wallet/home}">Wallet</a></p>
+            <p><a th:href="@{/wallet/home}">My Wallet</a></p>
             <p><a th:href="@{/user/bets}">My Bets</a></p>
-            <p><a th:href="@{/user/edit}">Account Details</a></p>
+            <p><a th:href="@{/user/edit}">My Account</a></p>
+            <!--<p><a th:href="@{/api/edit}">Api</a></p>-->
           </div>
 
+          <div>
+            <p><a th:href="@{/horse/all}">Search Horses</a></p>
+            <p><a th:href="@{/user/all}">Search Users</a></p>
+          </div>
+
+          <div >
+            <form th:action="@{/home/next}" method="post">
+                <input type="hidden" name="date" th:value="${date}"/>
+                <input type="submit" value="Next day >"/>
+            </form>
+            <div>
+                <a th:href="@{/home}"><button>Today</button></a>
+            </div>
+            <form th:action="@{/home/previous}" method="post">
+                <input type="hidden" name="date" th:value="${date}" />
+                <input type="submit" value="< Previous day"/>
+            </form>
+          </div>
+
+       <div>
         <h2>Upcoming Events:</h2>
 
-         <div class="events" th:each="event : ${upcomingEvents}" th:object="${event}">
+         <div class="events" th:each="event : ${events}" th:object="${event}">
             <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
                <table style="text-align: center; padding: 10px; margin: 5px;">
                     <tr>
@@ -38,7 +59,7 @@
                         <td >Time</td>
                         <td >Racecourse</td>
                         <td >Distance</td>
-                        <td >Bet</td>
+                        <td >Details</td>
                    </tr>
                    <tr>
                         <td th:text="*{startDate}"></td>
@@ -52,7 +73,9 @@
 
             </div>
          </div>
+        </div>
 
+        <span th:if="${#lists.isEmpty(liveEvents)} == false">
          <h2>Live Events:</h2>
 
                   <div class="events" th:each="event : ${liveEvents}" th:object="${event}">
@@ -72,10 +95,9 @@
                                  <td th:text="*{distance}"></td>
                                  <td><a th:href="@{/event/{id}(id=${event.id})}"> View </a></td>
                             </tr>
-
                         </table>
-
                      </div>
                   </div>
-    </body>
+              </span>
+       </body>
 </html>

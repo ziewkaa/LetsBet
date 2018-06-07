@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Horses</title>
 </head>
-<body>
-$END$
-</body>
+
+    <body>
+            <h3>Horses:</h3>
+                <table>
+                    <tr>
+                        <th>No.</th><th>Name</th><th>Age</th><th>Trainer</th><th>Details</th>
+                    </tr>
+                    <tr th:each="horse, iterStat : ${horses}" th:object="${horse}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{age}"></td>
+                        <td><span th:text="*{trainer.firstName}"/> <span th:text="*{trainer.lastName}"/></td>
+                        <td> <a th:href="@{/horse/{id}(id=${horse.id})}">Go</a></td>
+                    </tr>
+                </table>
+
+        </div>
+
+    </body>
+
 </html>
