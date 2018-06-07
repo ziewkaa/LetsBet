@@ -36,7 +36,6 @@ public class HorseDtoService {
 
     public List<HorseDto> getHorsesByEventId(Long id) {
 
-//        Event event = eventService.findEventById(id);
         List<EventsHorsesDto> ehdList = eventsHorsesDtoService.getEventsHorsesByEventId(id);
         List<HorseDto> horseDtos = new ArrayList<>();
 

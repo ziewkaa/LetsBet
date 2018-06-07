@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.EventsHorses;
+import pl.coderslab.letsbetnow.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,6 +30,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findAllByStatusAndEndTime(String status, LocalDate endTime);
 
-//    @Query("SELECT e FROM Event e JOIN Horse h ON e.horses.id = h.id WHERE h.id = :id")
-//    List<Event> findAllByHorseId(@Param("id") Long id);
+    @Query("SELECT e FROM Event e JOIN e.bets b JOIN b.user u WHERE u = :user AND e.status = 'Live'")
+    List<Event> findAllLiveEventsByUser(@Param("user") User user);
+
 }

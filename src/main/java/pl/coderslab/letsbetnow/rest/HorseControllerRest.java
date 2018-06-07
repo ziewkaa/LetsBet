@@ -22,28 +22,19 @@ public class HorseControllerRest {
     @Autowired
     private HorseDtoService horseDtoService;
 
-    @Autowired
-    private BetDtoService betDtoService;
-
     @GetMapping
     public List<HorseDto> getAllHorses() {
-
         return horseDtoService.getAllHorses();
-
     }
 
     @GetMapping("/{id}")
     public HorseDto getHorseById(@PathVariable Long id) {
-
         return horseDtoService.getHorseById(id);
-
     }
 
     @GetMapping("/event/{id}")
     public List<HorseDto> getHorsesByEventId(@PathVariable Long id) {
-
         return horseDtoService.getHorsesByEventId(id);
-
     }
 
 }

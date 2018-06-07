@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.EventsHorses;
 import pl.coderslab.letsbetnow.model.Horse;
+import pl.coderslab.letsbetnow.model.User;
 
 import java.util.List;
 
@@ -24,4 +25,7 @@ public interface EventsHorsesRepository extends JpaRepository<EventsHorses, Long
 
     @Query("SELECT e FROM EventsHorses e WHERE e.event.id = :id")
     List<EventsHorses> findAllByEventId(@Param("id") Long id);
+
+//    @Query("SELECT eh FROM EventsHorses eh JOIN eh.event ev JOIN ev.bets b JOIN b.user us WHERE ev.status = 'live' AND us = :user")
+//    List<EventsHorses> findAllLiveEventsForUser(@Param("user") User user);
 }

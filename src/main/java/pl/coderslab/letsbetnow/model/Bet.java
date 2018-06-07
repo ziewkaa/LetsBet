@@ -13,7 +13,7 @@ public class Bet {
 
     private LocalDateTime registered;
 
-    private boolean active = true;
+    private String status = "Active";
 
     @ManyToOne
     private Horse horse;
@@ -26,7 +26,6 @@ public class Bet {
 
     private Double betValue;
 
-    //bin
     private Double oddValue;
 
     private String betType;
@@ -98,12 +97,11 @@ public class Bet {
         this.betType = betType;
     }
 
-
-    public boolean isActive() {
-        return active;
+    public String getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
