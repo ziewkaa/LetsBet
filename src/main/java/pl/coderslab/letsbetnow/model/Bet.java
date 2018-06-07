@@ -13,7 +13,7 @@ public class Bet {
 
     private LocalDateTime registered;
 
-    private boolean approved = false;
+    private boolean active = true;
 
     @ManyToOne
     private Horse horse;
@@ -99,11 +99,11 @@ public class Bet {
     }
 
 
-    public boolean isApproved() {
-        return approved;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.letsbetnow.resources.FakerService;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.User;
@@ -64,11 +65,37 @@ public class HomeController {
     @GetMapping("/home")
     public String homePage(Model model){
 
-        List<Event> upcomingEvents = eventService.findAllEventsByStatusAndStartDate("Planned", LocalDate.now());
-        model.addAttribute("upcomingEvents", upcomingEvents);
+        LocalDate date = LocalDate.now();
+        List<Event> events = eventService.findAllEventsByStatusAndStartDate("Planned", date);
+        model.addAttribute("events", events);
 
-        List<Event> liveEvents = eventService.findAllEventsByStatusAndStartDate("Live", LocalDate.now());
+        List<Event> liveEvents = eventService.findAllEventsByStatusAndStartDate("Live", date);
         model.addAttribute("liveEvents", liveEvents);
+        model.addAttribute("date", date );
+
+        return "home";
+    }
+
+    @PostMapping("/home/next")
+    public String nextDayEvents(@RequestParam String date, Model model){
+
+        LocalDate newDate = LocalDate.parse(date);
+        newDate = newDate.plusDays(1);
+        List<Event> events = eventService.findAllEventsByStatusAndStartDate("Planned", newDate);
+        model.addAttribute("events", events);
+        model.addAttribute("date", newDate);
+
+        return "home";
+    }
+
+    @PostMapping("/home/previous")
+    public String previousDayEvents(@RequestParam String date,Model model){
+
+        LocalDate newDate = LocalDate.parse(date);
+        newDate = newDate.minusDays(1);
+        List<Event> events = eventService.findAllEventsByStatusAndStartDate("Approved", newDate);
+        model.addAttribute("events", events);
+        model.addAttribute("date", newDate);
 
         return "home";
     }

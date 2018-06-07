@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Welcome</title>
+
+    </head>
+    <body>
+
+        <div class="events" th:each="event : ${events}" th:object="${event}">
+
+                <table style="text-align: center; padding: 10px; margin: 5px;">
+                        <tr>
+                           <th>No.</th>
+                           <th>Horse</th>
+                           <th>Age</th>
+                           <th>Jockey</th>
+                           <th>Weight</th>
+                           <th>Win</th>
+                           <th>Place</th>
+                           <th>Show</th>
+                           <th>Position</th>
+                       </tr>
+
+                       <tr th:each="detail, iterStat : ${details}" th:object="${detail}">
+                            <td th:text="${iterStat.count}"></td>
+                            <td th:text="${detail.horse.name}"></td>
+                            <td th:text="${detail.horse.age}"></td>
+                            <td> <span th:text="${#strings.substring(detail.horse.jockey.firstName, 0,1)}"/>. <span th:text="${detail.horse.jockey.lastName}"/></td>
+                            <td th:text="${detail.horse.jockey.weight}"></td>
+                            <td th:text="${detail.odds.winValue}"></td>
+                            <td th:text="${detail.odds.placeValue}"></td>
+                            <td th:text="${detail.odds.showValue}"></td>
+                            <td th:text="${detail.position}"></td>
+                       </tr>
+                </table>
+
+        </div>
+
+    </body>
+</html>

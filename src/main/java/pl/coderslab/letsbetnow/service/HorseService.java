@@ -12,6 +12,8 @@ public interface HorseService {
 
     List<Horse> findAllHorses();
 
+    List<Horse> findAllHorsesOrderByName();
+
     List<Horse> findAllHorsesByTrainer(Trainer trainer);
 
     Horse findHorseByName(String name);

@@ -12,6 +12,9 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
 
     List<Horse> findAllByTrainer(Trainer trainer);
 
+    @Query("SELECT h FROM Horse h ORDER BY h.name")
+    List<Horse> findAllOrderByName();
+
     Horse findByName(String name);
 
     Horse findOneById(Long id);

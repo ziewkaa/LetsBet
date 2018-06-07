@@ -94,7 +94,7 @@ public class ScheduleController {
         }
     }
 
-    @Scheduled(cron = ("0/10 * * * * ?"))
+    @Scheduled(cron = ("0/15 * * * * ?"))
     public void setOdds() {
 
         List<Event> events = eventService.findAllEventsByStatus("Planned");
@@ -107,6 +107,7 @@ public class ScheduleController {
                 for (EventsHorses eh : eventsHorses) {
                     List<Odds> odds = new ArrayList<>();
                     odds.add(eh.getOdds());
+
                     for (Odds odd : odds) {
                         Random randomOdd = new Random();
                         odd.setWinValue(fakerService.generateOdds(1, randomOdd));
@@ -121,7 +122,7 @@ public class ScheduleController {
         }
     }
 
-    @Scheduled(cron = ("0/30 * * * * ?"))
+    @Scheduled(cron = ("0/20 * * * * ?"))
     public void checkRaceBets() {
 
         List<Event> events = eventService.findAllEventsByStatus("Ended");
@@ -132,7 +133,7 @@ public class ScheduleController {
             eventService.saveEvent(event);
             for (Bet bet : bets) {
                 checkBetsPrize(eventsHorses, bet);
-                bet.setApproved(true);
+                bet.setActive(false);
             }
         }
     }

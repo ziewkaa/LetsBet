@@ -8,6 +8,7 @@ import pl.coderslab.letsbetnow.model.Trainer;
 import pl.coderslab.letsbetnow.repository.HorseRepository;
 import pl.coderslab.letsbetnow.service.HorseService;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,6 +25,12 @@ public class HorseServiceImpl implements HorseService {
     @Override
     public List<Horse> findAllHorses() {
         return horseRepository.findAll();
+    }
+
+    @Override
+    public List<Horse> findAllHorsesOrderByName() {
+
+        return horseRepository.findAllOrderByName();
     }
 
     @Override

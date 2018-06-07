@@ -13,6 +13,8 @@ public interface BetService {
 
     List<Bet> findAllByUser(User user);
 
+    List<Bet> findAllBetsByUserAndEventStatus(User user, String status);
+
     List<Bet> findAllBets();
 
     List<Bet> findAllBetsByEventId(Long id);

@@ -29,6 +29,11 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    public List<Bet> findAllBetsByUserAndEventStatus(User user, String status) {
+        return betRepository.findAllByUserAndEventStatus(user,status);
+    }
+
+    @Override
     public List<Bet> findAllBets() {
         return betRepository.findAll();
     }

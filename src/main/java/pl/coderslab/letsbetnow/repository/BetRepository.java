@@ -12,6 +12,8 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
 
     List<Bet> findAllByUser(User user);
 
+    List<Bet> findAllByUserAndEventStatus(User user, String status);
+
     List<Bet> findAllByEventId(Long id);
 
     List<Bet> findAllByHorseId(Long id);
