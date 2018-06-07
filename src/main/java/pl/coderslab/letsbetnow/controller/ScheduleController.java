@@ -122,8 +122,18 @@ public class ScheduleController {
         }
     }
 
+    @Scheduled(cron = ("0/10 * * * * ?"))
+    public void checkLiveRaceBets() {
+
+        List<Bet> bets = betService.findAllBetsByEventStatus("Live");
+        for (Bet bet : bets) {
+            bet.setStatus("Waiting");
+            betService.saveBet(bet);
+        }
+    }
+
     @Scheduled(cron = ("0/20 * * * * ?"))
-    public void checkRaceBets() {
+    public void checkEndedRaceBets() {
 
         List<Event> events = eventService.findAllEventsByStatus("Ended");
         for (Event event : events) {
@@ -133,7 +143,28 @@ public class ScheduleController {
             eventService.saveEvent(event);
             for (Bet bet : bets) {
                 checkBetsPrize(eventsHorses, bet);
-                bet.setActive(false);
+                bet.setStatus("Approved");
+                betService.saveBet(bet);
+            }
+        }
+    }
+
+    @Scheduled(cron = ("0/10 * * * * ?"))
+    public void updateBetsOdds() {
+        List<Bet> bets = betService.findAllBetsByEventStatus("Planned");
+        for (Bet bet : bets) {
+            List<EventsHorses> eventsHorses = eventsHorsesService.findAllByHorseAndEvent(bet.getHorse(), bet.getEvent());
+            for (EventsHorses eh : eventsHorses){
+                if (bet.getBetType().equals("Win") && !bet.getOddValue().equals(eh.getOdds().getWinValue())) {
+                    bet.setOddValue(eh.getOdds().getWinValue());
+                    betService.saveBet(bet);
+                } else if (bet.getBetType().equals("Place") && !bet.getOddValue().equals(eh.getOdds().getWinValue())){
+                    bet.setOddValue(eh.getOdds().getPlaceValue());
+                    betService.saveBet(bet);
+                } else {
+                    bet.setOddValue(eh.getOdds().getShowValue());
+                    betService.saveBet(bet);
+                }
             }
         }
     }

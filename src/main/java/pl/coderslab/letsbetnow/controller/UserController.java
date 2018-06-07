@@ -30,13 +30,13 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private EventService eventService;
+
+    @Autowired
     private EventsHorsesService eventsHorsesService;
 
     @Autowired
     private BetService betService;
-
-    @Autowired
-    private OperationService operationService;
 
     @GetMapping("/edit")
     public String userDetails(@AuthenticationPrincipal CurrentUser currentUser, Model model){
@@ -89,8 +89,12 @@ public class UserController {
     public String userBets(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
         User user = userService.findUserByUsername(currentUser.getUsername());
-        List<Bet> bets = betService.findAllByUser(user);
-        model.addAttribute("bets",bets);
+        List<Bet> betsActive = betService.findAllBetsByUserAndEventStatus(user, "Planned");
+        List<Bet> betsApproved = betService.findAllBetsByUserAndEventStatus(user, "Approved");
+        List<Bet> betsWaiting = betService.findAllBetsByUserAndEventStatus(user, "Live");
+        model.addAttribute("betsActive",betsActive);
+        model.addAttribute("betsApproved",betsApproved);
+        model.addAttribute("betsWaiting",betsWaiting);
 
         return "user/bets";
     }
@@ -99,19 +103,8 @@ public class UserController {
     public String userBetsLive(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
         User user = userService.findUserByUsername(currentUser.getUsername());
-        List<Bet> bets = betService.findAllBetsByUserAndEventStatus(user, "Live");
-        Set<Event> events = new HashSet<>();
-        Map<Event,List<EventsHorses>> details = new HashMap<>();
-
-        for (Bet bet : bets) {
-            events.add(bet.getEvent());
-        }
-
-        for (Event event : events) {
-           details.put(event,eventsHorsesService.findAllByEvent(event));
-        }
-
-        model.addAttribute("events",details);
+        List<Event> events = eventService.findAllEventsByUserBets(user);
+        model.addAttribute("events", events);
 
         return "user/liveevents";
     }

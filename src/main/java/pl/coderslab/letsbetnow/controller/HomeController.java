@@ -67,9 +67,10 @@ public class HomeController {
 
         LocalDate date = LocalDate.now();
         List<Event> events = eventService.findAllEventsByStatusAndStartDate("Planned", date);
-        model.addAttribute("events", events);
-
+        List<Event> endedEvents = eventService.findAllEventsByStatusAndStartDate("Approved", date);
         List<Event> liveEvents = eventService.findAllEventsByStatusAndStartDate("Live", date);
+        model.addAttribute("upcomingEvents", events);
+        model.addAttribute("endedEvents", endedEvents);
         model.addAttribute("liveEvents", liveEvents);
         model.addAttribute("date", date );
 
@@ -82,7 +83,7 @@ public class HomeController {
         LocalDate newDate = LocalDate.parse(date);
         newDate = newDate.plusDays(1);
         List<Event> events = eventService.findAllEventsByStatusAndStartDate("Planned", newDate);
-        model.addAttribute("events", events);
+        model.addAttribute("upcomingEvents", events);
         model.addAttribute("date", newDate);
 
         return "home";
@@ -94,7 +95,7 @@ public class HomeController {
         LocalDate newDate = LocalDate.parse(date);
         newDate = newDate.minusDays(1);
         List<Event> events = eventService.findAllEventsByStatusAndStartDate("Approved", newDate);
-        model.addAttribute("events", events);
+        model.addAttribute("endedEvents", events);
         model.addAttribute("date", newDate);
 
         return "home";
