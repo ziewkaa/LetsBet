@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.EventsHorses;
+import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.repository.EventRepository;
 import pl.coderslab.letsbetnow.service.EventService;
 
@@ -80,6 +81,11 @@ public class EventServiceImpl implements EventService {
         event.setStatus("Live");
         eventRepository.save(event);
 
+    }
+
+    @Override
+    public List<Event> findAllEventsByUserBets(User user) {
+        return eventRepository.findAllLiveEventsByUser(user);
     }
 
 

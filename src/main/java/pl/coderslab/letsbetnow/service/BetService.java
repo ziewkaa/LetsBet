@@ -1,5 +1,6 @@
 package pl.coderslab.letsbetnow.service;
 
+import org.springframework.data.jpa.repository.Query;
 import pl.coderslab.letsbetnow.model.Bet;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.Horse;
@@ -24,4 +25,6 @@ public interface BetService {
     List<Bet> findAllBetsByHorseId(Long id);
 
     List<Bet> findAllBetsByEvent(Event event);
+
+    List<Bet> findAllBetsByEventStatus(String status);
 }

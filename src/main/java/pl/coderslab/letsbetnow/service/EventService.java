@@ -2,6 +2,7 @@ package pl.coderslab.letsbetnow.service;
 
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.EventsHorses;
+import pl.coderslab.letsbetnow.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,5 +31,7 @@ public interface EventService {
     Event findEventByIdAndStartDate(Long id, LocalDate startDate);
 
     public void setRandomEventLive();
+
+    List<Event> findAllEventsByUserBets(User user);
 
 }

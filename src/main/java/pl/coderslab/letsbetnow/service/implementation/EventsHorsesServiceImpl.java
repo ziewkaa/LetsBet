@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.EventsHorses;
 import pl.coderslab.letsbetnow.model.Horse;
+import pl.coderslab.letsbetnow.model.User;
 import pl.coderslab.letsbetnow.repository.EventsHorsesRepository;
 import pl.coderslab.letsbetnow.service.EventsHorsesService;
 
@@ -56,6 +57,11 @@ public class EventsHorsesServiceImpl implements EventsHorsesService {
     public List<EventsHorses> findAllByEventId(Long id) {
         return eventsHorsesRepository.findAllByEventId(id);
     }
+
+//    @Override
+//    public List<EventsHorses> findAllLiveEventsByUser(User user) {
+//        return eventsHorsesRepository.findAllB(user);
+//    }
 
 
 }
