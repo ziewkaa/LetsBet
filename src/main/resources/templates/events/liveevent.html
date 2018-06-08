@@ -32,10 +32,10 @@
                         <td>Start Time</td>
                     </tr>
                     <tr>
-                        <td th:text="${detail.event.id}"></td>
-                        <td th:text="${detail.event.racecourse}"></td>
-                        <td th:text="${detail.event.startDate}"></td>
-                        <td th:text="${detail.event.startTime}"></td>
+                        <td th:text="*{event.id}"></td>
+                        <td th:text="*{event.racecourse}"></td>
+                        <td th:text="*{event.startDate}"></td>
+                        <td th:text="*{event.startTime}"></td>
                     </tr>
                 </table>
             </div>

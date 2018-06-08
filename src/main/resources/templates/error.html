@@ -7,6 +7,8 @@
 </head>
     <body>
         <h3>We are terribly sorry, an unexpected error occured</h3>
-        <a style="color: blue" th:href="@{/}">Home</a>
+        <form th:action="@{/home}" method="post">
+            <input type="submit" value="Main Page"/>
+        </form>
     </body>
 </html>

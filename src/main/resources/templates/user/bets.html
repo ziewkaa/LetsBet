@@ -34,7 +34,7 @@
                                     <td>
                                         <p>Racecourse: <span th:text="*{event.racecourse}"/></p>
                                         <p>Distance: <span th:text="*{event.distance}"/></p>
-                                        <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a> </p>
+                                        <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a></p>
                                     </td>
                                     <td th:text="*{horse.name}"><a th:href="@{/horse/{id}(id=*{horse.id})}"></a></td>
                                     <td th:text="*{#temporals.formatISO(registered)}"></td>
@@ -71,7 +71,7 @@
                                     <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a> </p>
                                 </td>
                                 <td th:text="*{horse.name}"></td>
-                                <td th:text="*{#temporals.formatISO(registered)}"></td>
+                                <td th:text="*{registered}"></td>
                                 <td th:text="*{betType}"></td>
                                 <td th:text="*{oddValue}"></td>
                                 <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
@@ -105,7 +105,7 @@
                                 <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a> </p>
                             </td>
                             <td th:text="*{horse.name}"></td>
-                            <td th:text="*{#temporals.formatISO(registered)}"></td>
+                            <td th:text="*{registered}"></td>
                             <td th:text="*{betType}"></td>
                             <td th:text="*{oddValue}"></td>
                             <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>

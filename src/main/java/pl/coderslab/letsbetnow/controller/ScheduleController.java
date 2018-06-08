@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * Class operating as a scheduling engine
+ * Responsible for updates and changes of data for
+ */
 
 @Controller
 public class ScheduleController {
@@ -38,6 +42,11 @@ public class ScheduleController {
     @Autowired
     private EventsHorsesService eventsHorsesService;
 
+
+    /**
+    * Method scans events, sets 'live' status to particular events, and generates first positions for horses for each event
+    * */
+
     @Scheduled(cron = ("0/15 * * * * ?"))
     public void setRaceStatus() {
 
@@ -48,7 +57,6 @@ public class ScheduleController {
             if (event.getStartTime().getMinute() == LocalTime.now().getMinute()) {
                 event.setStatus("Live");
                 List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
-
 
                 int counter = 0;
                 while(counter < eventsHorses.size()) {
@@ -68,6 +76,10 @@ public class ScheduleController {
         }
 
     }
+
+    /**
+     * Method scans live events and sets random positions to event's horses
+     */
 
     @Scheduled(cron = ("0/10 * * * * ?"))
     public void setPositions() {
@@ -92,6 +104,10 @@ public class ScheduleController {
             }
         }
     }
+
+    /**
+     * Method scans planned events and sets odds for each type of bet
+     */
 
     @Scheduled(cron = ("0/15 * * * * ?"))
     public void setOdds() {
@@ -121,6 +137,10 @@ public class ScheduleController {
         }
     }
 
+    /**
+     * Method scans live events and changes each event's bets status to 'Waiting'
+     */
+
     @Scheduled(cron = ("0/10 * * * * ?"))
     public void checkLiveRaceBets() {
 
@@ -130,6 +150,10 @@ public class ScheduleController {
             betService.saveBet(bet);
         }
     }
+
+    /**
+     * Method pulls bets for 'planned' events and generates new odds for each event
+     */
 
     @Scheduled(cron = ("0/10 * * * * ?"))
     public void updateBetsOdds() {
@@ -150,6 +174,11 @@ public class ScheduleController {
             }
         }
     }
+
+    /**
+     *  Method pulls events
+     */
+
 
     @Scheduled(cron = ("0/10 * * * * ?"))
     public void checkEndedRaceBets() {

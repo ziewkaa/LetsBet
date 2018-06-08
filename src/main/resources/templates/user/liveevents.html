@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Credit Card</title>
+        <title>Live</title>
         <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
     </head>
     <body>
@@ -32,11 +32,11 @@
                                 <td th:text="*{racecourse}"></td>
                                 <td th:text="*{distance}"></td>
                                 <td >
-                                    <a th:href="@{/event/{id}(id=${event.id})}"> View </a>
+                                    <a th:href="@{/event/{id}(id=*{id})}"> View </a>
                                 </td>
                             </tr>
                         </table>
-        </div>
+            </div>
         <div th:include="fragments/footer :: pagefooter"></div>
     </body>
 </html>
