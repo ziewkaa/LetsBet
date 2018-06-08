@@ -27,4 +27,6 @@ public interface BetService {
     List<Bet> findAllBetsByEvent(Event event);
 
     List<Bet> findAllBetsByEventStatus(String status);
+
+    List<Bet> findAllByEventStatusAndBetStatus(String status);
 }

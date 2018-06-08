@@ -9,6 +9,7 @@ import pl.coderslab.letsbetnow.service.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -26,6 +27,9 @@ public class ScheduleController {
     private OddsService oddsService;
 
     @Autowired
+    private OperationService operationService;
+
+    @Autowired
     private BetService betService;
 
     @Autowired
@@ -34,7 +38,6 @@ public class ScheduleController {
     @Autowired
     private EventsHorsesService eventsHorsesService;
 
-    //event
     @Scheduled(cron = ("0/15 * * * * ?"))
     public void setRaceStatus() {
 
@@ -71,17 +74,13 @@ public class ScheduleController {
 
         List<Event> events = eventService.findAllEventsByStatus("Live");
 
-        //takes each event
         for (Event event : events) {
-            // checks start time
             if (event.getEndTime().isAfter(LocalTime.now())) {
 
-                //gets all details for  event
                 List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
                 List<Integer> positions = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
                 Collections.shuffle(positions);
 
-                //sets random positions for event
                 int counter = 0;
                 while (counter < eventsHorses.size()) {
                     for (EventsHorses horse : eventsHorses) {
@@ -132,23 +131,6 @@ public class ScheduleController {
         }
     }
 
-    @Scheduled(cron = ("0/20 * * * * ?"))
-    public void checkEndedRaceBets() {
-
-        List<Event> events = eventService.findAllEventsByStatus("Ended");
-        for (Event event : events) {
-            List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
-            List<Bet> bets = betService.findAllBetsByEvent(event);
-            event.setStatus("Approved");
-            eventService.saveEvent(event);
-            for (Bet bet : bets) {
-                checkBetsPrize(eventsHorses, bet);
-                bet.setStatus("Approved");
-                betService.saveBet(bet);
-            }
-        }
-    }
-
     @Scheduled(cron = ("0/10 * * * * ?"))
     public void updateBetsOdds() {
         List<Bet> bets = betService.findAllBetsByEventStatus("Planned");
@@ -169,6 +151,26 @@ public class ScheduleController {
         }
     }
 
+    @Scheduled(cron = ("0/10 * * * * ?"))
+    public void checkEndedRaceBets() {
+
+        List<Event> events = eventService.findAllEventsByStatus("Ended");
+        for (Event event : events) {
+            List<EventsHorses> eventsHorses = eventsHorsesService.findAllByEvent(event);
+            List<Bet> bets = betService.findAllBetsByEvent(event);
+            event.setStatus("Approved");
+            eventService.saveEvent(event);
+            for (Bet bet : bets) {
+                if (bet.getStatus().equals("Approved")){
+                    continue;
+                }
+                bet.setStatus("Approved");
+                betService.saveBet(bet);
+                checkBetsPrize(eventsHorses, bet);
+            }
+        }
+    }
+
     private void checkBetsPrize(List<EventsHorses> events, Bet bet) {
 
         for (EventsHorses eventsHorses : events) {
@@ -180,13 +182,13 @@ public class ScheduleController {
                 }
             } else if (bet.getBetType().equals("Place")) {
                 if (eventsHorses.getHorse().equals(bet.getHorse())) {
-                    if (eventsHorses.getPosition() == 2) {
+                    if (eventsHorses.getPosition() == 2 || eventsHorses.getPosition() == 1) {
                         calculatePrize(eventsHorses.getOdds().getPlaceValue(), bet);
                     }
                 }
             } else if (bet.getBetType().equals("Show")) {
                 if (eventsHorses.getHorse().equals(bet.getHorse())) {
-                    if (eventsHorses.getPosition() == 3) {
+                    if ( eventsHorses.getPosition() == 1 || eventsHorses.getPosition() == 2 ||eventsHorses.getPosition() == 3) {
                         calculatePrize(eventsHorses.getOdds().getShowValue(), bet);
                     }
                 }
@@ -198,9 +200,17 @@ public class ScheduleController {
         User user = bet.getUser();
         BigDecimal funds = user.getFunds();
         double prize = bet.getBetValue() * value;
+
         funds = funds.add(BigDecimal.valueOf(prize));
         user.setFunds(funds);
         userService.saveUser(user);
+        Operation operation = new Operation();
+        operation.setUser(user);
+        operation.setRegisteredDate(LocalDate.now());
+        operation.setRegisteredTime(LocalTime.now());
+        operation.setType("Bet prize transfer");
+        operation.setValue(BigDecimal.valueOf(prize));
+        operationService.saveOperation(operation);
     }
 
 }

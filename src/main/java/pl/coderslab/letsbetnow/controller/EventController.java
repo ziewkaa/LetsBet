@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.letsbetnow.model.Event;
 import pl.coderslab.letsbetnow.model.EventsHorses;
-import pl.coderslab.letsbetnow.model.Horse;
 import pl.coderslab.letsbetnow.service.EventService;
 import pl.coderslab.letsbetnow.service.EventsHorsesService;
 import pl.coderslab.letsbetnow.service.HorseService;
@@ -37,10 +36,10 @@ public class EventController {
         model.addAttribute("details", details);
 
         if (event.getStatus().equals("Planned")) {
-            return "plannedevent";
+            return "events/plannedevent";
         }
 
-        return "liveevent";
+        return "events/liveevent";
     }
 
 }

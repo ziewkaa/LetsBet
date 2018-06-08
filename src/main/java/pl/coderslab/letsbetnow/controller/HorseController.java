@@ -32,7 +32,7 @@ public class HorseController {
     public String allHorses(Model model) {
         List<Horse> horses = horseService.findAllHorsesOrderByName();
         model.addAttribute("horses",horses);
-        return "horses";
+        return "events/horses";
     }
 
     @GetMapping("/{id}")
@@ -43,7 +43,7 @@ public class HorseController {
         model.addAttribute("horse",horse);
         model.addAttribute("events",events);
         model.addAttribute("history",history);
-        return "horse";
+        return "events/horse";
     }
 
 }

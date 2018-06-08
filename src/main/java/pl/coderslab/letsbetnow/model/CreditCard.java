@@ -1,8 +1,7 @@
 package pl.coderslab.letsbetnow.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -13,19 +12,19 @@ public class CreditCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
-    private Long number;
+    private Long cardNumber;
 
     @Min(value = 1, message = "* Incorrect month")
     @Max(value = 12, message = "* Incorrect month")
-    private int expiringMonth;
+    private Integer expiringMonth;
 
-    @Min(18)
-    @Max(value = 25, message = "* Incorrect year")
-    private int expiringYear;
+    @Min(value = 18, message = "* Incorrect year value (Requires min 18)")
+    @Max(value = 25 )
+    private Integer expiringYear;
 
-    private int cvv;
+    private Integer cvv;
 
-    @ManyToOne
+    @OneToOne
     private User user;
 
     public CreditCard (){};
@@ -38,35 +37,35 @@ public class CreditCard {
         this.id = id;
     }
 
-    public Long getNumber() {
-        return number;
+    public Long getCardNumber() {
+        return cardNumber;
     }
 
-    public void setNumber(Long number) {
-        this.number = number;
+    public void setCardNumber(Long cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public int getExpiringMonth() {
+    public Integer getExpiringMonth() {
         return expiringMonth;
     }
 
-    public void setExpiringMonth(int expiringMonth) {
+    public void setExpiringMonth(Integer expiringMonth) {
         this.expiringMonth = expiringMonth;
     }
 
-    public int getExpiringYear() {
+    public Integer getExpiringYear() {
         return expiringYear;
     }
 
-    public void setExpiringYear(int expiringYear) {
+    public void setExpiringYear(Integer expiringYear) {
         this.expiringYear = expiringYear;
     }
 
-    public int getCvv() {
+    public Integer getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(Integer cvv) {
         this.cvv = cvv;
     }
 

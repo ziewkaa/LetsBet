@@ -7,14 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.letsbetnow.model.Bet;
-import pl.coderslab.letsbetnow.model.Event;
-import pl.coderslab.letsbetnow.model.EventsHorses;
-import pl.coderslab.letsbetnow.model.User;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.letsbetnow.model.*;
 import pl.coderslab.letsbetnow.service.*;
 import pl.coderslab.letsbetnow.service.implementation.config.CurrentUser;
 
@@ -33,7 +27,7 @@ public class UserController {
     private EventService eventService;
 
     @Autowired
-    private EventsHorsesService eventsHorsesService;
+    private CreditCardService creditCardService;
 
     @Autowired
     private BetService betService;
@@ -42,17 +36,16 @@ public class UserController {
     public String userDetails(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
         User user = userService.findUserByUsername(currentUser.getUsername());
-
         model.addAttribute(user);
 
         return "user/details";
     }
 
     @PostMapping("/edit")
-    public String userDetails(@AuthenticationPrincipal UserDetails userDetails, @Valid User user, BindingResult bindingResult, Model model){
+    public String userDetails(@AuthenticationPrincipal UserDetails userDetails, @Valid @ModelAttribute  User user, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
-            return "details";
+            return "user/details";
         }
 
         User oldUser = userService.findUserByUsername(userDetails.getUsername());
@@ -72,16 +65,31 @@ public class UserController {
         userService.deleteUser(user);
         session.invalidate();
 
-        return "redirect:/logout";
+        return "redirect:/";
     }
 
     @GetMapping("/card/add")
     public String addCard(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
         User user = userService.findUserByUsername(currentUser.getUsername());
+        model.addAttribute(new CreditCard());
+        model.addAttribute(user);
 
-        model.addAttribute("user",user);
+        return "user/addcard";
+    }
 
+    @PostMapping("/card/add")
+    public String addCard(@AuthenticationPrincipal CurrentUser currentUser,@Valid @ModelAttribute CreditCard creditCard, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()) {
+            return "user/addcard";
+        }
+
+        User user = userService.findUserByUsername(currentUser.getUsername());
+        creditCard.setUser(user);
+        userService.saveUser(user);
+        creditCardService.saveCreditCard(creditCard);
+        model.addAttribute(user);
         return "user/wallet";
     }
 
@@ -103,9 +111,13 @@ public class UserController {
     public String userBetsLive(@AuthenticationPrincipal CurrentUser currentUser, Model model){
 
         User user = userService.findUserByUsername(currentUser.getUsername());
-        List<Event> events = eventService.findAllEventsByUserBets(user);
+        List<Bet> bets = betService.findAllByUser(user);
+        Set<Event> events = new HashSet<>();
+        for (Bet bet : bets) {
+            Event event = bet.getEvent();
+            events.add(event);
+        }
         model.addAttribute("events", events);
-
         return "user/liveevents";
     }
 

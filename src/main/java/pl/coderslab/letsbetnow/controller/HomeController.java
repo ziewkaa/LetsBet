@@ -36,7 +36,7 @@ public class HomeController {
 
         model.addAttribute(new User());
 
-        return "register";
+        return "user/register";
     }
 
     @PostMapping("/register")
@@ -54,7 +54,7 @@ public class HomeController {
         }
 
         if (bindingResult.hasErrors()){
-            return "register";
+            return "user/register";
         }
 
         userService.saveUser(user);

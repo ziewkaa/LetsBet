@@ -1,8 +1,7 @@
 package pl.coderslab.letsbetnow.model;
 
-import pl.coderslab.letsbetnow.validator.CustomEmail;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -23,18 +22,17 @@ public class User {
 
     private String lastName;
 
-    @NotEmpty
+    @NotEmpty(message = " * Username cannot be empty")
     private String username;
 
     @Min(0)
     private BigDecimal funds = new BigDecimal(0);
 
-    @CustomEmail(message = " * Please provide valid email address")
+    @Email
     @NotEmpty(message = " * Email cannot be empty")
     @Column(unique = true)
     private String email;
 
-    @NotEmpty(message = " * Password cannot be empty")
     @Size(min = 5, message = " * Password must have at least 5 characters")
     private String password;
 
@@ -52,6 +50,9 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     // why set?
+
+    @OneToOne
+    private CreditCard creditCard;
 
     public User (){};
 
@@ -149,5 +150,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 }

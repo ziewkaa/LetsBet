@@ -5,7 +5,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.letsbetnow.model.Bet;
 import pl.coderslab.letsbetnow.model.Event;
@@ -16,7 +15,6 @@ import pl.coderslab.letsbetnow.service.EventService;
 import pl.coderslab.letsbetnow.service.HorseService;
 import pl.coderslab.letsbetnow.service.UserService;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -67,7 +65,7 @@ public class BetController {
         model.addAttribute("bet", bet);
         model.addAttribute("event", eventToBet);
         model.addAttribute("horse", horseToBet);
-        return "bet";
+        return "user/bet";
     }
 
 

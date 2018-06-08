@@ -26,4 +26,7 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
 
     @Query("SELECT b FROM Bet b WHERE b.event.status = :status")
     List<Bet> findAllByEventStatus(@Param("status") String status);
+
+    @Query("SELECT b FROM Bet b WHERE b.status = 'Waiting' AND b.event.status = :status")
+    List<Bet> findAllByEventStatusAndBetStatus(@Param("status") String status);
 }

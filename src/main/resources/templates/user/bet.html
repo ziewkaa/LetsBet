@@ -5,13 +5,14 @@
 
     <head>
         <meta charset="utf-8">
+        <title>Bet</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Welcome</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
     </head>
-<body>
+    <body>
 
-    <div class="content" >
-
+        <div th:include="fragments/header :: pagenav"></div>
+        <div style="margin-left:25%;padding:1px 16px;height:1000px;">
             <div th:if="${bet.oddValue} > ${user.funds}">
                 <p>Please recharge your wallet <a th:href="@{/wallet/recharge}">here</a></p>
             </div>

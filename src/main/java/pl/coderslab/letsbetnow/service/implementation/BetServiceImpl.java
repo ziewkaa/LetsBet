@@ -62,4 +62,9 @@ public class BetServiceImpl implements BetService {
     public List<Bet> findAllBetsByEventStatus(String status) {
         return betRepository.findAllByEventStatus(status);
     }
+
+    @Override
+    public List<Bet> findAllByEventStatusAndBetStatus(String status) {
+        return betRepository.findAllByEventStatusAndBetStatus(status);
+    }
 }

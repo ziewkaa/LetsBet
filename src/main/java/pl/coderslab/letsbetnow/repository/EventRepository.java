@@ -30,7 +30,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findAllByStatusAndEndTime(String status, LocalDate endTime);
 
-    @Query("SELECT e FROM Event e JOIN e.bets b JOIN b.user u WHERE u = :user AND e.status = 'Live'")
+    @Query("SELECT e FROM Event e JOIN e.bets b ON b.event.id = e.id JOIN b.user u WHERE u = :user AND e.status = 'Live'")
     List<Event> findAllLiveEventsByUser(@Param("user") User user);
 
 }
