@@ -27,9 +27,6 @@ public class HomeController {
     @Autowired
     private EventService eventService;
 
-    @Autowired
-    private FakerService fakerService;
-
 
     @GetMapping("/register")
     public String register(Model model){

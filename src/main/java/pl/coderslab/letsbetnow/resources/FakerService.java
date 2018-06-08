@@ -142,8 +142,8 @@ public class FakerService {
             Event event = new Event();
             List<String> racecourses = new ArrayList<>(Arrays.asList("Ascot", "Hamilton Park", "Hexham", "Kempton Park", "Leicester", "Newbury", "Newcastle", "Perth", "Warwick", "Windsor"));
             List<Integer> distances = new ArrayList<>(Arrays.asList(1400, 1600, 1800, 2000, 2200, 2500));
-            List<Integer> minutes = new ArrayList<>(Arrays.asList(1, 3, 5, 10));
-            LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(4)));
+            List<Integer> minutes = new ArrayList<>(Arrays.asList( 1,3, 5, 10,15, 20));
+            LocalTime currentTime = LocalTime.now().plusMinutes(minutes.get(random.nextInt(6)));
 
             if (i < 40) {
                 event.setStartTime(currentTime);
