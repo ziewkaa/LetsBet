@@ -115,7 +115,9 @@ public class UserController {
         Set<Event> events = new HashSet<>();
         for (Bet bet : bets) {
             Event event = bet.getEvent();
-            events.add(event);
+            if (event.getStatus().equals("Live")) {
+                events.add(event);
+            }
         }
         model.addAttribute("events", events);
         return "user/liveevents";

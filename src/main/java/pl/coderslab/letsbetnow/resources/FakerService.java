@@ -212,9 +212,9 @@ public class FakerService {
         }
     }
 
-    public double generateOdds(double base, Random randomWin) {
-        double start = base + randomWin.nextInt(10);
-        double end = (double) randomWin.nextInt(100) / 100;
+    public double generateOdds(double base, Random random) {
+        double start = base + random.nextInt(10);
+        double end = (double) random.nextInt(100) / 100;
         double result = start + end;
         double finalResult = Math.round(result * 100.0) / 100.0;
         return finalResult;
