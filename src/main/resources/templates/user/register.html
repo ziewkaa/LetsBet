@@ -2,31 +2,85 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+      <head>
+          <title>Register</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+          <style>
+
+                      input[type=text]{
+                                      width: 100%;
+                                      padding: 12px 20px;
+                                      margin: 8px 0;
+                                      display: block;
+                                      border: 1px solid #922613;
+                                      box-sizing: border-box;
+                                  }
+
+                                  input[type=password]{
+                                      width: 100%;
+                                      padding: 12px 20px;
+                                      margin: 8px 0;
+                                      display: block;
+                                      border: 1px solid #922613;
+                                      box-sizing: border-box;
+                                  }
+
+                                  input[type=submit] {
+                                      width: 100%;
+                                      background-color: #9c9866;
+                                      color: white;
+                                      padding: 14px 20px;
+                                      margin: 8px 0;
+                                      border: none;
+                                      border-radius: 4px;
+                                      cursor: pointer;
+                                  }
+
+                                  input[type=submit]:hover {
+                                      background-color: #807c56;
+                                  }
+
+                                  .form {
+                                      max-width: 50%;
+                                      border-radius: 5px;
+                                      background-color: #fbfbfb;
+                                      padding: 20px;
+                                      margin: 0 auto ;
+                                  }
+          </style>
+      </head>
+
     <body>
 
-        <h1>Register</h1>
-        <form th:action="@{/register}" th:object="${user}" method="post">
+            <div class="form">
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <h3>Lets Bet Registration Form </h3>
+                <p>First Name : </p>
+                <input type="text" th:field="*{firstName}"/>
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName Error</p>
 
-            <div><label> First Name : <input type="text" name="firstName"/> </label></div>
-            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName Error</p>
+                <p>Last Name : </p>
+                <input type="text" th:field="*{lastName}"/>
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</p>
 
-            <div><label> Last Name : <input type="text" name="lastName"/> </label></div>
-            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</p>
+                <p> Username : </p>
+                <input type="text" th:field="*{username}"/>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
 
-            <div><label> Username : <input type="text" name="username"/> </label></div>
-            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+                <p>Password:</p>
+                <input type="password" th:field="*{password}"/>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
 
-            <div><label> Email : <input type="text" name="email"/> </label></div>
-            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+                <p> Email : </p>
+                <input type="text" th:field="*{email}"/>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
 
-            <!--<div><label> Birth Date : <input type="date" name="birthdate"/> </label></div>-->
-            <!--<p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">BirthDate Error</p>-->
-
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
-
-            <div><input type="submit" value="Sign In"/></div>
-        </form>
-
+                <div><input type="submit" value="Sign In"/></div>
+                <h4><a th:href="@{/login}">Log In Here</a></h4>
+            </form>
+        </div>
     </body>
 </html>

@@ -3,36 +3,74 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head>
-    <title>Add CreditCard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
-</head>
+    <head>
+        <title>Add CreditCard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+        <style>
+                input[type=number]{
+                    width: 100%;
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    display: block;
+                    border: 1px solid #922613;
+                    box-sizing: border-box;
+                }
+
+                input[type=submit] {
+                    width: 100%;
+                    background-color: #9c9866;
+                    color: white;
+                    padding: 14px 20px;
+                    margin: 8px 0;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                input[type=submit]:hover {
+                    background-color: #807c56;
+                }
+
+                .form {
+                    max-width: 80%;
+                    border-radius: 5px;
+                    background-color: #fbfbfb;
+                    padding: 20px;
+                    margin: 0 auto ;
+                }
+          </style>
+    </head>
 
     <body>
 
         <div th:include="fragments/header :: pagenav"></div>
-        <div style="margin-left:25%;padding:1px 16px;height:1000px;">
-            <h1>Add Credit Card:</h1>
+            <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 
-            <form th:action="@{/user/card/add}" th:object="${creditCard}" method="post">
+                <form class="form" th:action="@{/user/card/add}" th:object="${creditCard}" method="post">
 
-                <div><label> Number : <input type="number" name="cardNumber"/> </label></div>
-                <p th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">CardNumber Error</p>
+                    <h2>Add Credit Card:</h2>
 
-                <div><label> Month Expiring : <input type="number" name="expiringMonth"/> </label></div>
-                <p th:if="${#fields.hasErrors('expiringMonth')}" th:errors="*{expiringMonth}">MonthExpiring Error</p>
+                    <p> Number : </p>
+                    <input type="number" th:field="*{cardNumber}"/>
+                    <p th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">CardNumber Error</p>
 
-                <div><label> Year Expiring : <input type="number" name="expiringYear"/> </label></div>
-                <p th:if="${#fields.hasErrors('expiringYear')}" th:errors="*{expiringYear}">YearExpiring Error</p>
+                    <p> Month Expiring : </p>
+                    <input type="number" th:field="*{expiringMonth}"/>
+                    <p th:if="${#fields.hasErrors('expiringMonth')}" th:errors="*{expiringMonth}">MonthExpiring Error</p>
 
-                <div><label> CVV: <input type="number" name="cvv"/> </label></div>
-                <p th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}">Cvv Error</p>
+                    <p> Year Expiring : </p>
+                    <input type="number" th:field="*{expiringYear}"/>
+                    <p th:if="${#fields.hasErrors('expiringYear')}" th:errors="*{expiringYear}">YearExpiring Error</p>
 
-                <div><input type="submit" value="Add"/></div>
-            </form>
+                    <p> CVV: </p>
+                    <input type="number" th:field="*{cvv}"/>
+                    <p th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}">Cvv Error</p>
 
+                    <div><input type="submit" value="Add"/></div>
+                </form>
+
+            </div>
         <div th:include="fragments/footer :: pagefooter"></div>
-        </div>
     </body>
 </html>

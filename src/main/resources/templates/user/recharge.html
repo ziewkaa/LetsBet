@@ -4,24 +4,43 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head>
-    <title>Recharge Wallet</title>
-</head>
+    <head>
+        <title>Recharge Wallet</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+        <style>
+                    .container {
+                        max-width: 50%;
+                        background-color: #fbfbfb;
+                        align-content: center;
+                        text-align: center;
+                        padding: 20px;
+                        margin: 0 auto ;
+                    }
+                </style>
+    </head>
 
     <body>
 
-        <div>
-            <p>Current funds: </p></br>
-            <p th:text="${user.funds}"></p>
+        <div th:include="fragments/header :: pagenav"></div>
+        <div style="margin-left:25%;padding:1px 16px;height:1000px;">
+
+          <div class="container">
+            <div>
+                <p>Current funds: </p>
+                <p th:text="${user.funds}"></p>
+            </div>
+
+            <form th:action="@{/wallet/recharge}" method="post">
+               <p> Amount : <input type="number" name="amount" placeholder="10" step="10" min="10" max="1000" /></p>
+               <p><input type="hidden" name="id" th:field="${user.id}"></p>
+               <p><input type="submit" value="Recharge"/></p>
+            </form>
+
         </div>
 
-        <form th:action="@{/wallet/recharge}" method="post">
-
-           <div><label> Amount : <input type="number" name="amount" placeholder="10" step="10" min="10" max="1000" /></label></div>
-           <div><label><input type="hidden" name="id" th:value="${user.id}"></label></div>
-           <div><input type="submit" value="Recharge"/></div>
-
-        </form>
+        <div th:include="fragments/footer :: pagefooter"></div>
     </body>
 
 </html>

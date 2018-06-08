@@ -6,9 +6,13 @@
 
 <head>
     <title>Horses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
 </head>
 
     <body>
+        <div th:include="fragments/header :: pagenav"></div>
+        <div style="margin-left:25%;padding:1px 16px;height:1000px;">
             <h3>Horses:</h3>
                 <table>
                     <tr>

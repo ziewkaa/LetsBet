@@ -6,16 +6,61 @@
 
 <head>
     <title>Login View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        input[type=text]{
+                        width: 100%;
+                        padding: 12px 20px;
+                        margin: 8px 0;
+                        display: block;
+                        border: 1px solid #922613;
+                        box-sizing: border-box;
+                    }
+
+                    input[type=password]{
+                        width: 100%;
+                        padding: 12px 20px;
+                        margin: 8px 0;
+                        display: block;
+                        border: 1px solid #922613;
+                        box-sizing: border-box;
+                    }
+
+                    input[type=submit] {
+                        width: 100%;
+                        background-color: #9c9866;
+                        color: white;
+                        padding: 14px 20px;
+                        margin: 8px 0;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+
+                    input[type=submit]:hover {
+                        background-color: #807c56;
+                    }
+
+                    form {
+                        max-width: 50%;
+                        border-radius: 5px;
+                        background-color: #fbfbfb;
+                        padding: 20px;
+                        margin: 0 auto ;
+                    }
+    </style>
 </head>
-
     <body>
-
-        <form th:action="@{/login}" method="post">
-            <div><label> Username : <input type="text" name="username" required/> </label></div>
-            <div><label> Password: <input type="password" name="password" required/> </label></div>
-            <input type="submit" value="Login"/>
-        </form>
-
+            <form th:action="@{/login}" method="post">
+                <h3>Log In to Your Account:</h3>
+                <p>Username : </p>
+                <input type="text" name="username" required/>
+                <p> Password: </p>
+                <input type="password" name="password" required/>
+                <input type="submit" value="Login"/>
+                <p><a th:href="@{/register}">Sign Up Here</a></p>
+            </form>
+        </div>
     </body>
 
 </html>

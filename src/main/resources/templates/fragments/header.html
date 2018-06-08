@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+  <body>
+        <div th:fragment="pagenav">
+            <ul class="nav">
+                <li><a th:href="@{/home}">Home</a></li>
+                 <li><a th:href="@{/user/edit}">Account Details</a></li>
+                 <li><a th:href="@{/wallet/home}">Wallet</a></li>
+                 <li><a th:href="@{/user/bets}">Bets</a></li>
+                 <li><a th:href="@{/user/live}">Live Results</a></li>
+                 <li><a th:href="@{/horse/all}">Horses Catalogue</a></li>
+                 <li><a th:href="@{http://localhost:8080/swagger-ui.html}">API</a></li>
+                 <li>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Log Out"/>
+                    </form>
+                 </li>
+            </ul>
+        </div>
+  </body>
+</html>

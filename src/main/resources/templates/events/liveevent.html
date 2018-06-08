@@ -5,21 +5,47 @@
 
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Welcome</title>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+        <style>
+            .container {
+                max-width: 50%;
+                background-color: #fbfbfb;
+                align-content: center;
+                text-align: center;
+                padding: 20px;
+                margin: 0 auto ;
+            }
+        </style>
     </head>
     <body>
+        <div th:include="fragments/header :: pagenav"></div>
+        <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 
-        <div class="event">
+            <div class="container">
+                <table>
+                    <tr>
+                        <td>Event ID</td>
+                        <td>Racecourse</td>
+                        <td>Start Date</td>
+                        <td>Start Time</td>
+                    </tr>
+                    <tr>
+                        <td th:text="${detail.event.id}"></td>
+                        <td th:text="${detail.event.racecourse}"></td>
+                        <td th:text="${detail.event.startDate}"></td>
+                        <td th:text="${detail.event.startTime}"></td>
+                    </tr>
+                </table>
+            </div>
 
-                <table style="text-align: center; padding: 10px; margin: 5px;">
+                <table>
                         <tr>
                            <th>No.</th>
                            <th>Horse</th>
                            <th>Age</th>
                            <th>Jockey</th>
-                           <th>Weight</th>
                            <th>Win</th>
                            <th>Place</th>
                            <th>Show</th>
@@ -28,10 +54,9 @@
 
                        <tr th:each="detail, iterStat : ${details}" th:object="${detail}">
                             <td th:text="${iterStat.count}"></td>
-                            <td th:text="${detail.horse.name}"></td>
+                            <td><a th:href="@{/horse/{id}(id=${detail.horse.id})}"><span th:text="${detail.horse.name}"/></a></td>
                             <td th:text="${detail.horse.age}"></td>
                             <td> <span th:text="${#strings.substring(detail.horse.jockey.firstName, 0,1)}"/>. <span th:text="${detail.horse.jockey.lastName}"/></td>
-                            <td th:text="${detail.horse.jockey.weight}"></td>
                             <td th:text="${detail.odds.winValue}"></td>
                             <td th:text="${detail.odds.placeValue}"></td>
                             <td th:text="${detail.odds.showValue}"></td>

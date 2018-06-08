@@ -7,48 +7,37 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Welcome</title>
-        <style>
-
-            .bets {
-                max-width: 60%;
-                align-content: center;
-                border: 1 px solid black;
-            }
-            table, td{
-                padding: 10px;
-            }
-
-        </style>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
     </head>
     <body>
-
-            <div class="bets">
+        <div th:include="fragments/header :: pagenav"></div>
+            <div style="margin-left:25%;padding:1px 16px;height:1000px;">
+               <p><a th:href="@{/user/bets}"><button>Refresh</button></a> </p>
                 <h2>Active Bets:</h2>
                     <div class="bets">
                         <table>
                             <tr>
                                 <th>No.</th>
-                                <th>Event ID</th>
-                                <th>Racecourse</th>
+                                <th>Event</th>
                                 <th>Horse</th>
                                 <th>Registered</th>
-                                <th>Type</th>
-                                <th>Odd Value</th>
+                                <th>Bet Type</th>
+                                <th>Odds Value</th>
                                 <th>Bet Value</th>
-                                <th>Estimated Result</th>
+                                <th>Estimated Prize</th>
                             </tr>
 
-                            <div th:if="${#lists.isEmpty(betsActive)} == true">
-                                <p>You have no active bets</p>
-                            </div>
                             <span th:if="${#lists.isEmpty(betsActive)} == false">
                                 <tr th:each="bet , iterStat : ${betsActive}" th:object="${bet}">
                                     <td th:text="${iterStat.count}"></td>
-                                    <td th:text="*{event.id}"></td>
-                                    <td th:text="*{event.racecourse}"></td>
-                                    <td th:text="*{horse.name}"></td>
-                                    <td th:text="*{registered}"></td>
+                                    <td>
+                                        <p>Racecourse: <span th:text="*{event.racecourse}"/></p>
+                                        <p>Distance: <span th:text="*{event.distance}"/></p>
+                                        <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a> </p>
+                                    </td>
+                                    <td th:text="*{horse.name}"><a th:href="@{/horse/{id}(id=*{horse.id})}"></a></td>
+                                    <td th:text="*{#temporals.formatISO(registered)}"></td>
                                     <td th:text="*{betType}"></td>
                                     <td th:text="*{oddValue}"></td>
                                     <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
@@ -64,26 +53,25 @@
                     <table>
                         <tr>
                             <th>No.</th>
-                            <th>Event ID</th>
-                            <th>Racecourse</th>
+                            <th>Event</th>
                             <th>Horse</th>
                             <th>Registered</th>
                             <th>Type</th>
-                            <th>Odd Value</th>
+                            <th>Odds Value</th>
                             <th>Bet Value</th>
                             <th>Prize</th>
                         </tr>
 
-                        <div th:if="${#lists.isEmpty(betsWaiting)} == true">
-                            <p>You have no waiting bets</p>
-                        </div>
                         <span th:if="${#lists.isEmpty(betsWaiting)} == false">
                             <tr th:each="bet , iterStat : ${betsWaiting}" th:object="${bet}">
                                 <td th:text="${iterStat.count}"></td>
-                                <td th:text="*{event.id}"></td>
-                                <td th:text="*{event.racecourse}"></td>
+                                <td>
+                                    <p>Racecourse: <span th:text="*{event.racecourse}"/></p>
+                                    <p>Distance: <span th:text="*{event.distance}"/></p>
+                                    <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a> </p>
+                                </td>
                                 <td th:text="*{horse.name}"></td>
-                                <td th:text="*{registered}"></td>
+                                <td th:text="*{#temporals.formatISO(registered)}"></td>
                                 <td th:text="*{betType}"></td>
                                 <td th:text="*{oddValue}"></td>
                                 <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
@@ -100,33 +88,33 @@
                  <table>
                     <tr>
                         <th>No.</th>
-                        <th>Event ID</th>
-                        <th>Racecourse</th>
+                        <th>Event </th>
                         <th>Horse</th>
                         <th>Registered</th>
                         <th>Type</th>
-                        <th>Odd Value</th>
+                        <th>Odds Value</th>
                         <th>Bet Value</th>
-                        <th>Prize</th>
                     </tr>
-                    <div th:if="${#lists.isEmpty(betsApproved)} == true">
-                         <p>You have no approved bets</p>
-                    </div>
+
                     <span th:if="${#lists.isEmpty(betsApproved)} == false">
                         <tr th:each="bet , iterStat : ${betsApproved}" th:object="${bet}">
                             <td th:text="${iterStat.count}"></td>
-                            <td th:text="*{event.id}"></td>
-                            <td th:text="*{event.racecourse}"></td>
+                            <td>
+                                <p>Racecourse: <span th:text="*{event.racecourse}"/></p>
+                                <p>Distance: <span th:text="*{event.distance}"/></p>
+                                <p><a th:href="@{/event/{id}(id=*{event.id})}">Details</a> </p>
+                            </td>
                             <td th:text="*{horse.name}"></td>
-                            <td th:text="*{registered}"></td>
+                            <td th:text="*{#temporals.formatISO(registered)}"></td>
                             <td th:text="*{betType}"></td>
                             <td th:text="*{oddValue}"></td>
                             <td th:text="${#numbers.formatDecimal(bet.betValue,1, 2)}"></td>
-                            <td>0.0</td>
                         </tr>
                     </span>
                 </table>
             </div>
         </div>
+        </div>
+        <div th:include="fragments/footer :: pagefooter"></div>
     </body>
 </html>

@@ -6,17 +6,42 @@
 
 <head>
     <title>Welcome</title>
-</head>
+    <style>
+
+        .container {
+          max-width: 50%;
+          background-color: #fbfbfb;
+          align-content: center;
+          text-align: center;
+          padding: 20px;
+          margin: 0 auto ;
+        }
+
+        h3,h4 {
+            margin: 0 auto;
+            padding: 20px;
+
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #9c9866;
+            border: 1px solid #9c9866;
+            font-size: 15px;
+            color:white;
+        }
+    </style>
+    </head>
 
     <body>
 
-          <div sec:authorize="!isAuthenticated()">
+        <div class="container">
+            <h3>WELCOME ON THE " LET'S BET " SITE</h3>
+            <h4>To participate please Log In or Register</h4>
                <p><a th:href="@{/register}"><button>Register</button></a></p>
                <p><a th:href="@{/login}"><button>Log In</button></a></p>
-          </div>
-
-        <div sec:authorize="isAuthenticated()">
-            <p>Welcome <span sec:authentication="name"></span>!</p>
         </div>
 
     </body>

@@ -6,30 +6,37 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Welcome</title>
-
+        <title>Credit Card</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
     </head>
     <body>
 
-        <h3>Live Races you are currently betting on: </h3>
-        <div class="events" th:each="event : ${events}" th:object="${event}">
-                <div class="event" style="align-content: center; margin: 10px; border: 1px solid black; max-width: 80%">
-                    <table style="text-align: center; padding: 10px; margin: 5px;">
-                        <tr>
-                            <td>No.</td>
-                            <td >Time</td>
-                            <td >Racecourse</td>
-                            <td >Distance</td>
-                            <td >Results</td>
-                        </tr>
-                        <tr>
-                            <td th:text="*{startTime}"></td>
-                            <td th:text="*{racecourse}"></td>
-                            <td th:text="*{distance}"></td>
-                            <td><a th:href="@{/event/{id}(id=${event.id})}"> View </a></td>
-                        </tr>
-                    </table>
-                </div>
+        <div th:include="fragments/header :: pagenav"></div>
+        <div style="margin-left:25%;padding:1px 16px;height:1000px;">
+
+            <p><a th:href="@{/user/live}"><button>Refresh</button></a> </p>
+            <h3>Live Races you are currently betting on: </h3>
+                        <table>
+                            <tr>
+                                <td>No.</td>
+                                <td>Event ID</td>
+                                <td >Start Time</td>
+                                <td >Racecourse</td>
+                                <td >Distance</td>
+                                <td >Results</td>
+                            </tr>
+                            <tr th:each="event, iterStat : ${events}" th:object="${event}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="*{id}"></td>
+                                <td th:text="*{startTime}"></td>
+                                <td th:text="*{racecourse}"></td>
+                                <td th:text="*{distance}"></td>
+                                <td >
+                                    <a th:href="@{/event/{id}(id=${event.id})}"> View </a>
+                                </td>
+                            </tr>
+                        </table>
         </div>
+        <div th:include="fragments/footer :: pagefooter"></div>
     </body>
 </html>

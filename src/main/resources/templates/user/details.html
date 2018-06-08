@@ -7,37 +7,87 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Edit Account</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+        <style>
+            input[type=text]{
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: block;
+                border: 1px solid #922613;
+                box-sizing: border-box;
+            }
 
+            input[type=password]{
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: block;
+                border: 1px solid #922613;
+                box-sizing: border-box;
+            }
+
+            input[type=submit] {
+                width: 100%;
+                background-color: #9c9866;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: #807c56;
+            }
+
+            .form {
+                max-width: 80%;
+                border-radius: 5px;
+                background-color: #fbfbfb;
+                padding: 20px;
+                margin: 0 auto ;
+            }
+
+      </style>
       </head>
 
     <body>
-        <h1>Edit Personal Details</h1>
-        <form th:action="@{/user/edit}" th:object="${user}" method="post">
 
-            <div><label> First Name : <input type="text" name="firstName" th:value="*{firstName}"/> </label></div>
-            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName Error</p>
+        <div th:include="fragments/header :: pagenav"></div>
 
-            <div><label> Last Name : <input type="text" name="lastName" th:value="*{lastName}"/> </label></div>
-            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</p>
+            <div style="margin-left:25%;padding:1px 16px;height:1000px;">
+                <div class="form">
+                    <h3>Edit Personal Details</h3>
 
-            <!--<div><label> Birth Date : <input type="date" name="birthdate"/> </label></div>-->
-            <!--<p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">BirthDate Error</p>-->
+                    <form th:action="@{/user/edit}" th:object="${user}" method="post">
+                        <p>First Name : </p>
+                        <input type="text" th:field="*{firstName}"/>
+                        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName Error</p>
 
-            <div><label> Password: <input type="password" name="password" th:value="*{password}"/> </label></div>
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                        <p>Last Name : </p>
+                        <input type="text" th:field="*{lastName}"/>
+                        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</p>
 
-            <input type="hidden" name="username" th:value="*{username}">
-            <input type="hidden" name="birthDate" th:value="*{birthDate}">
-            <div><input type="submit" value="Update"/></div>
-        </form>
+                        <p>Password: </p>
+                        <input type="password" th:field="*{password}"/>
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
 
-        <div class="deleteAccount">
-            <p>Delete Account:</p></br>
-            <form th:action="@{/user/delete}" method="post">
-                 <input type="hidden" name="username" th:value="${user.username}">
-                 <input type="submit" value="Delete"/>
-            </form>
-        </div>
+                        <input type="hidden" th:field="*{username}">
+                        <input type="hidden" th:field="*{birthDate}">
+                        <input type="submit" value="Update"/>
+                    </form>
 
+                    <div class="deleteAccount">
+                        <h3>Delete Account:</h3>
+                        <form th:action="@{/user/delete}" method="post">
+                             <input type="hidden" name="username" th:value="${user.username}">
+                             <input type="submit" value="Delete"/>
+                        </form>
+                </div>
+            </div>
+            </div>
+        <div th:include="fragments/footer :: pagefooter"></div>
     </body>
 </html>
